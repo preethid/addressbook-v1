@@ -5,7 +5,7 @@
     <groupId>com.preethidevops.tutorial</groupId>
     <artifactId>addressbook</artifactId>
     <packaging>war</packaging>
-    <version>2.0</version>
+    <version>6.0</version>
     <name>Vaadin Addressbook example</name>
 
     <properties>
@@ -173,6 +173,30 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>9.2.3.v20140905</version>
             </plugin>
+      <plugin>
+         <groupId>org.jacoco</groupId>
+         <artifactId>jacoco-maven-plugin</artifactId>
+         <version>0.8.8</version>
+         <executions>
+            <!-- Prepares the agent during the test phase to gather coverage data -->
+            <execution>
+               <id>prepare-agent</id>
+               <goals>
+                  <goal>prepare-agent</goal>
+               </goals>
+            </execution>
+            <!-- Generates the coverage report in HTML format in the target/site/jacoco directory -->
+            <execution>
+               <id>report</id>
+               <phase>verify</phase>
+               <goals>
+                  <goal>report</goal>
+               </goals>
+            </execution>
+         </executions>
+      </plugin>
+  
+
 			
 						<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -404,7 +428,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-site-plugin</artifactId>
-                        <version>2.1.1</version>
+                        <version>3.21.0</version>
                         <dependencies>
                             <dependency>
                                 <groupId>com.preethidevops.tutorial</groupId>
@@ -420,7 +444,7 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>cobertura-maven-plugin</artifactId>
-                        <version>${cobertura.version}</version>
+                        <version>2.7</version>
                         <configuration>
                             <formats>
                                 <format>html</format>
@@ -491,5 +515,11 @@
             </reporting>
         </profile>
     </profiles>
-
+    <distributionManagement>
+    <repository>
+        <id>central</id>
+        <name>a0h6x0sylzvum-artifactory-primary-0-releases</name>
+        <url>https://newaxisdevops.jfrog.io/artifactory/devops-demo-libs-release</url>
+    </repository>
+</distributionManagement>
 </project>
