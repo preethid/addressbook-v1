@@ -520,12 +520,4 @@
             </reporting>
         </profile>
 </profiles>
-<distributionManagement>
-            <repository>
-                            <id>central</id>
-                                    <name>a0spitu3l0iky-artifactory-primary-0-releases</name>
-                                            <url>https://jforgartifactory.jfrog.io/artifactory/addressbook-v1-libs-release</url>
-                                                </repository>
-                                        </distributionManagement>
-
 </project>
