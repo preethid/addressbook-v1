@@ -1,18 +1,31 @@
-<?xml version="1.0" encoding="UTF-8"?>
+   <?xml version="1.0" encoding="UTF-8"?>
 <settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.2.0 http://maven.apache.org/xsd/settings-1.2.0.xsd" xmlns="http://maven.apache.org/SETTINGS/1.2.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <servers>
     <server>
-      <username>xxx</username>
-      <password>xxx</password>
+      <username>chidithotiakhila@gmail.com</username>
+      <password>cmVmdGtuOjAxOjE3NjU3Mjc2MTk6MVJpQURFQ2paYzFwcU93ZGNXZkxBTVI5WGxX</password>
       <id>central</id>
     </server>
     <server>
-      <username>xxx</username>
-      <password>xxx</password>
+      <username>chidithotiakhila@gmail.com</username>
+      <password>cmVmdGtuOjAxOjE3NjU3Mjc2MTk6MVJpQURFQ2paYzFwcU93ZGNXZkxBTVI5WGxX</password>
       <id>snapshots</id>
     </server>
+    <server>
+      <username>chidithotiakhila@gmail.com</username>
+      <password>cmVmdGtuOjAxOjE3NjU3Mjc2MTk6MVJpQURFQ2paYzFwcU93ZGNXZkxBTVI5WGxX</password>
+      <id>addbook-libs-snapshot</id>
+    </server>
   </servers>
+  <mirrors>
+    <mirror>
+      <mirrorOf>*</mirrorOf>
+      <name>addbook-libs-snapshot</name>
+      <url>https://trialp2spog.jfrog.io/artifactory/addbook-libs-snapshot</url>
+      <id>addbook-libs-snapshot</id>
+    </mirror>
+  </mirrors>
   <profiles>
     <profile>
       <repositories>
@@ -21,14 +34,14 @@
             <enabled>false</enabled>
           </snapshots>
           <id>central</id>
-          <name>adbook-libs-release</name>
-          <url>https://trialaeybn6.jfrog.io/artifactory/adbook-libs-release</url>
+          <name>addbook-libs-release</name>
+          <url>https://trialp2spog.jfrog.io/artifactory/addbook-libs-release</url>
         </repository>
         <repository>
           <snapshots />
           <id>snapshots</id>
-          <name>adbook-libs-snapshot</name>
-          <url>https://trialaeybn6.jfrog.io/artifactory/adbook-libs-snapshot</url>
+          <name>addbook-libs-snapshot</name>
+          <url>https://trialp2spog.jfrog.io/artifactory/addbook-libs-snapshot</url>
         </repository>
       </repositories>
       <pluginRepositories>
@@ -37,14 +50,14 @@
             <enabled>false</enabled>
           </snapshots>
           <id>central</id>
-          <name>adbook-libs-release</name>
-          <url>https://trialaeybn6.jfrog.io/artifactory/adbook-libs-release</url>
+          <name>addbook-libs-release</name>
+          <url>https://trialp2spog.jfrog.io/artifactory/addbook-libs-release</url>
         </pluginRepository>
         <pluginRepository>
           <snapshots />
           <id>snapshots</id>
-          <name>adbook-libs-snapshot</name>
-          <url>https://trialaeybn6.jfrog.io/artifactory/adbook-libs-snapshot</url>
+          <name>addbook-libs-snapshot</name>
+          <url>https://trialp2spog.jfrog.io/artifactory/addbook-libs-snapshot</url>
         </pluginRepository>
       </pluginRepositories>
       <id>artifactory</id>
@@ -54,3 +67,4 @@
     <activeProfile>artifactory</activeProfile>
   </activeProfiles>
 </settings>
+
