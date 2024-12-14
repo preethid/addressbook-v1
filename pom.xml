@@ -523,7 +523,7 @@
     <repository>
         <id>central</id>
         <name>a0mvkm56xagrk-artifactory-primary-0-releases</name>
-        <url>https://trialp2spog.jfrog.io/artifactory/addbook-libs-release</url>
+        <url>https://trialp2spog.jfrog.io/artifactory/addbook-libs-release-local</url>
     </repository>
 </distributionManagement>
 </project>
