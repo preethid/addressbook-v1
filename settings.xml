@@ -1,31 +1,18 @@
-   <?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.2.0 http://maven.apache.org/xsd/settings-1.2.0.xsd" xmlns="http://maven.apache.org/SETTINGS/1.2.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <servers>
     <server>
       <username>chidithotiakhila@gmail.com</username>
-      <password>cmVmdGtuOjAxOjE3NjU3Mjc2MTk6MVJpQURFQ2paYzFwcU93ZGNXZkxBTVI5WGxX</password>
+      <password>cmVmdGtuOjAxOjE3NjU3MTA1NjI6bUFXR3QyaUdZSllmUnBsRkNvSHcxUkRsa0dC</password>
       <id>central</id>
-    </server>
-    <server> 
-      <username>chidithotiakhila@gmail.com</username>
-      <password>cmVmdGtuOjAxOjE3NjU3Mjc2MTk6MVJpQURFQ2paYzFwcU93ZGNXZkxBTVI5WGxX</password>
-      <id>snapshots</id>
     </server>
     <server>
       <username>chidithotiakhila@gmail.com</username>
-      <password>cmVmdGtuOjAxOjE3NjU3Mjc2MTk6MVJpQURFQ2paYzFwcU93ZGNXZkxBTVI5WGxX</password>
-      <id>addbook-libs-snapshot</id>
+      <password>cmVmdGtuOjAxOjE3NjU3MTA1NjI6bUFXR3QyaUdZSllmUnBsRkNvSHcxUkRsa0dC</password>
+      <id>snapshots</id>
     </server>
   </servers>
-  <mirrors>
-    <mirror>
-      <mirrorOf>*</mirrorOf>
-      <name>addbook-libs-snapshot</name>
-      <url>https://trialp2spog.jfrog.io/artifactory/addbook-libs-snapshot</url>
-      <id>addbook-libs-snapshot</id>
-    </mirror>
-  </mirrors>
   <profiles>
     <profile>
       <repositories>
@@ -67,4 +54,3 @@
     <activeProfile>artifactory</activeProfile>
   </activeProfiles>
 </settings>
-
