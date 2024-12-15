@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent none
 
     parameters{
         string(name: 'ENV', defaultValue: 'stage', description: 'envinorment to deploy')
@@ -10,6 +10,7 @@ pipeline {
 
     stages {
         stage('compile') {
+            agent any
             steps {
                 script{
                     echo "compile the code"
@@ -23,6 +24,7 @@ pipeline {
     
     
         stage('codeREview') {
+            agent any
             steps {
                 script{
                     echo "codereview  the code by jacoco"
@@ -33,6 +35,7 @@ pipeline {
             }
         
         stage('UnitTest') {
+            agent any
             when{
                 expression{
                     params.DEBUG_BUILD == true
@@ -54,6 +57,7 @@ pipeline {
             
         }
         stage('codeCoverage') {
+            agent {labet 'linux_slave'}
             steps {
                 script{
                     echo "codesCoverage  the code by jacoco"
@@ -64,6 +68,7 @@ pipeline {
             }
         
         stage('package') {
+            agent any
             input{
                 message "select the platform to deploy"
                 ok "versionn selected"
