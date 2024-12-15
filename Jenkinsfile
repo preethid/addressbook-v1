@@ -14,6 +14,7 @@ pipeline {
                 script{
                     echo "compile the code"
                     echo "compileing in ${params.ENV}"
+                    sh "mvn compile"
                 }
 
                 }
@@ -25,6 +26,7 @@ pipeline {
             steps {
                 script{
                     echo "codereview  the code by jacoco"
+                    sh "mvn pmd:pmd"
                 }
 
                 }
@@ -39,6 +41,7 @@ pipeline {
             steps {
                 script{
                     echo "packagrs of  the code"
+                    sh "mvn test"
                 }
 
                 }
@@ -48,6 +51,7 @@ pipeline {
             steps {
                 script{
                     echo "codesCoverage  the code by jacoco"
+                    sh "mvn verify"
                 }
 
                 }
@@ -67,6 +71,7 @@ pipeline {
                     echo "packagrs of  the code"
                     echo 'platform is ${platfrom}'
                     echo "pakage the version ${params.AKG}"
+                    echo "mvn package"
                 }
 
                 }
