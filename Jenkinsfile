@@ -47,7 +47,7 @@ pipeline {
         stage('codeCoverage') {
             steps {
                 script{
-                    echo "codeCoverage  the code by jacoco"
+                    echo "codesCoverage  the code by jacoco"
                 }
 
                 }
