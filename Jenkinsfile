@@ -58,13 +58,14 @@ pipeline {
                 message "select the platform to deploy"
                 ok "versionn selected"
                 parameters{
-                    choice(name:'NEWAPP',choices:['EKS','EC2','On-prem'])
+                    choice(name:'platform',choices:['EKS','EC2','On-prem'])
                 }
             }
             
             steps {
                 script{
                     echo "packagrs of  the code"
+                    echo "platform is $(platfrom)"
                     echo "pakage the version ${params.AKG}"
                 }
 
