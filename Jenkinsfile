@@ -13,19 +13,19 @@ pipeline {
         
     
     
-        stage('codeReview') {
+        stage('codeCoverage') {
             steps {
                 script{
-                    echo "codereview  the code"
+                    echo "codeCoverage  the code by jacoco"
                 }
 
                 }
             }
         
-        stage('unitTest') {
+        stage('package') {
             steps {
                 script{
-                    echo "test  the code"
+                    echo "packagrs of  the code"
                 }
 
                 }
