@@ -55,11 +55,12 @@ pipeline {
         
         stage('package') {
             input{
-                message "select the platform of the deploy"
-                ok "platform selected"
+                message "select the platform to deploy"
+                ok "versionn selected"
                 parameters{
-                    choice(name:'NewApp',choices:['EKS','EC2,'On-pren'])
+                    choice(name:'NEWAPP',choices:['EKS','EC2','On-prem'])
                 }
+            }
             
             steps {
                 script{
