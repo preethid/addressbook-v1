@@ -31,6 +31,11 @@ pipeline {
             }
         
         stage('UnitTest') {
+            when{
+                expression{
+                    params.execyteTests == true
+                }
+            }
             steps {
                 script{
                     echo "packagrs of  the code"
