@@ -65,7 +65,7 @@ pipeline {
             steps {
                 script{
                     echo "packagrs of  the code"
-                    echo "platform is $(platfrom)"
+                    echo "platform is ${platfrom}"
                     echo "pakage the version ${params.AKG}"
                 }
 
