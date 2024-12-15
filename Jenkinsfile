@@ -33,7 +33,7 @@ pipeline {
         stage('UnitTest') {
             when{
                 expression{
-                    params.execyteTests == true
+                    params.DEBUG_BUILD == true
                 }
             }
             steps {
