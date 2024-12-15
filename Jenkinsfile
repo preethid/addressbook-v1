@@ -42,8 +42,14 @@ pipeline {
                 script{
                     echo "packagrs of  the code"
                     sh "mvn test"
+
                 }
 
+                }
+                post{
+                    always{
+                        junit 'target/surefire-reports/*.xml'
+                    }
                 }
             
         }
