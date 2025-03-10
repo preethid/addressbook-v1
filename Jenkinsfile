@@ -51,14 +51,14 @@ pipeline {
                 message "Select the platform to deploy"
                 ok "Platform selected"
                 parameters{
-                    choice(name: 'Platform',choices ['On-prem','EKS','EC2'])
+                    choice(name: 'Platform',choices:['On-prem','EKS','EC2'])
                 }
             }
             steps {
 
                 echo 'Depoly the application...'
                 echo "Deploying the app version ${params.APPVERSION}"
-                echo "Deploying on ${params.platform}"
+                echo "Deploying on ${params.Platform}"
             }
 
         }
