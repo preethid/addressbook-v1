@@ -18,7 +18,7 @@ pipeline {
             steps {
 
                 echo 'Compiling the source code...'
-                echo "Compiling in env: ${params.ENV}"
+                echo "Compiling in env: ${params.Env}"
 
             }
 
