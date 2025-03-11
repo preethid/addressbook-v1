@@ -41,7 +41,7 @@ pipeline {
 
         }
 
-        stage('UnitTest') {
+            stage('UnitTest') {
                 when{
                     expression{
                         params.executeTests == true
@@ -60,7 +60,7 @@ pipeline {
 
         }
 
-        stage('Package') {
+            stage('Package') {
 
             steps {
 
@@ -70,7 +70,7 @@ pipeline {
             }
 
         }
-        stage('Deploy') {
+            stage('Deploy') {
             input{
                 message "Select the platform to deploy"
                 ok "Platform selected"
