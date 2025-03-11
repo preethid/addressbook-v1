@@ -33,6 +33,11 @@ pipeline {
                 echo "Deploying the app version ${params.APPVERSION}"
                 sh "mvn pmd:pmd"
             }
+            post{
+                always{
+                    pmd pattern: 'target/pmd.xml'
+                }
+            }
 
         }
 
@@ -46,6 +51,11 @@ pipeline {
                 echo 'Running the tests...'
                 sh "mvn test"
                 
+            }
+            post{
+                always{
+                    junit 'target/surefire-reports/*.xml'
+                }
             }
 
         }
