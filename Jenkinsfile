@@ -12,12 +12,11 @@ pipeline {
     }
 
     stages {
-
+        
         stage('Compile') {
 
             steps {
-
-                echo 'Compiling the source code...'
+                echo 'Compiling the source code'
                 echo "Compiling in env: ${params.Env}"
                 sh "mvn compile"
 
@@ -37,7 +36,7 @@ pipeline {
            //     always{
            //         pmd pattern: 'target/pmd.xml'
            //     }
-            }
+           // }
 
         }
 
@@ -88,4 +87,4 @@ pipeline {
         }
 
     }
-
+}
