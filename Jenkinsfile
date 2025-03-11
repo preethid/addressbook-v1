@@ -19,7 +19,19 @@ pipeline {
 
                 echo 'Compiling the source code...'
                 echo "Compiling in env: ${params.Env}"
+                sh "mvn compile"
 
+            }
+
+        }
+
+        stage('CodeReview') {
+
+            steps {
+
+                echo 'Reviewing the code...'
+                echo "Deploying the app version ${params.APPVERSION}"
+                sh "mvn pmd:pmd"
             }
 
         }
@@ -32,6 +44,7 @@ pipeline {
                 }
                 steps {
                 echo 'Running the tests...'
+                sh "mvn test"
                 
             }
 
@@ -43,6 +56,7 @@ pipeline {
 
                 echo 'Packaging the application...'
                 echo "Deploying the app version ${params.APPVERSION}"
+                sh "mvn package"
             }
 
         }
