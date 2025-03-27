@@ -50,6 +50,7 @@ pipeline {
                 }
             }
         }
+
         stage('package') {
             steps {
                 script{
@@ -61,8 +62,8 @@ pipeline {
         stage('deploy') {
             steps {
                 script{
-                echo "publish the code ${params.APPVERSION}"
-                sh "mvn -u deploy -s settings.xml"
+                echo "publish the codes ${params.APPVERSION}"
+        
                 }
             }
         }
