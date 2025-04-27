@@ -1,0 +1,71 @@
+pipeline {
+    agent any
+
+     tools{
+        maven 'mymaven'
+     }
+     parameters{
+        string(name:'Env',defaultValue:'Test',description:'Environment to deploy')
+        booleanParam(name:'executeTests',defaultValue: true,description:'decide to run tc')
+        //when ever it is true then only it will execute
+        choice(name:'APPVERSION',choices:['1.1','1.2','1.3'])
+
+   }
+
+    stages {
+        stage('compile') {
+            steps {
+                script{
+                echo "compling the code in ${params.env}"
+                sh "mvn compile"
+                }
+            }
+        }
+        stage('unit test') {
+            when{
+                expression{
+                    params.executeTests == true
+                }
+            }
+            steps {
+                script{
+                echo 'executing test cases'
+                sh "mvn test"
+                }
+            }
+        }
+        stage('code review') {
+            steps {
+                script{
+                echo 'reviewing the code'
+                sh "mvn pmd:pmd"
+                }
+            }
+        }
+        stage('code analysis') {
+            steps {
+                script{
+                echo 'coverage analysis'
+                sh "mvn verify"
+                }
+            }
+        }
+
+        stage('package') {
+            steps {
+                script{
+                echo 'coverted into single deployable file'
+                sh "mvn package"
+                }
+            }
+        }
+        stage('deploy') {
+            steps {
+                script{
+                echo "publish the codes ${params.APPVERSION}"
+        
+                }
+            }
+        }
+    }
+}
