@@ -5,7 +5,7 @@
     <groupId>com.preethidevops.tutorial</groupId>
     <artifactId>addressbook</artifactId>
     <packaging>war</packaging>
-    <version>4.0</version>
+    <version>6.0</version>
     <name>Vaadin Addressbook example</name>
 
     <properties>
@@ -521,11 +521,11 @@
             </reporting>
         </profile>
     </profiles>
-   <distributionManagement>
+ <distributionManagement>
     <repository>
         <id>central</id>
-        <name>xxx</name>
-        <url>xx</url>
+        <name>a0qh9y2t72ku7-artifactory-primary-0-releases</name>
+        <url>https://preethidevopsdemo.jfrog.io/artifactory/addbook-libs-release-local</url>
     </repository>
 </distributionManagement>
 </project>
