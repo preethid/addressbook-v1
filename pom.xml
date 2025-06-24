@@ -534,3 +534,4 @@
     <url>https://nprabhu.jfrog.io/artifactory/prabhu-demo-libs-snapshot</url>
   </snapshotRepository>
 </distributionManagement>
+</project>
