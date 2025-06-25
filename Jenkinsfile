@@ -1,6 +1,8 @@
 pipeline {
-    agent any
-
+    agent none
+    tools{
+        maven 'mymaven'
+    }
     parameters{
         string(name: 'Env', defaultValue: 'Test', description: 'Version to deploy')
         booleanParam(name: 'executeTests', defaultValue: true, description: 'Decide to run test cases')
@@ -10,17 +12,20 @@ pipeline {
 
     stages {
         stage('Compile') {
+            agent any
             steps {
                 echo 'Compile the code'
                 echo "Compiling for ${params.Env} environment"
             }
         }
         stage('CodeReview') {
+            agent any
             steps {
                 echo 'Review the code'
             }
         }
         stage('UniTest') {
+            agent any
             when{
                 expression{
                     params.executeTests == true
@@ -36,6 +41,12 @@ pipeline {
             }
         }
         stage('Package') {
+            agent {label 'linux_slave'}
+            when {
+                expression {
+                    params.Env == 'Test'
+                }
+            }
             steps {
                 echo 'Package the code'
                 echo "Packaging  ${params.APPVERSION} version"
