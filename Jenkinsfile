@@ -55,7 +55,13 @@ pipeline {
         }
         stage('Package') {
             agent {label 'linux_slave'}
-          
+          input {
+                message "Archive the artifacts"
+                ok "select the Platform"
+                parameters{
+                    choice(name: 'Platform', choices: ['Jfrog', 'Nexus'], description: 'Select the platform for deployment')
+                }
+            }
             steps {
                 script{
                 echo 'Package the code'
@@ -70,13 +76,7 @@ pipeline {
                 message "Do you want to publish the artifact to JFrog?"
                 ok "Yes, publish it"
             }
-            // input {
-            //     message "Archive the artifacts"
-            //     ok "select the Platform"
-            //     parameters{
-            //         choice(name: 'Platform', choices: ['Jfrog', 'Nexus'], description: 'Select the platform for deployment')
-            //     }
-            // }
+            
             steps {
                 script{
                 echo 'Publish the artifcat to jfrog'
