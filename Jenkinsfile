@@ -26,7 +26,7 @@ pipeline {
             steps {
                 script{
                 echo 'Review the code'
-                echo "pmd:pmd"
+                sh "mvn pmd:pmd"
             }
         }
         }
