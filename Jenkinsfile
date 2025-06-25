@@ -45,6 +45,7 @@ pipeline {
         }
         }
         stage('CoverageAnalysis') {
+            agent any
             steps {
                 script{
                 echo 'Static Code Coverage'
@@ -64,6 +65,7 @@ pipeline {
         }
         }
         stage('PubishtoJfrog') {
+            agent any
             steps {
                 script{
                 echo 'Publish the artifcat to jfrog'
