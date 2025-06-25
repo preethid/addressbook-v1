@@ -42,11 +42,7 @@ pipeline {
         }
         stage('Package') {
             agent {label 'linux_slave'}
-            when {
-                expression {
-                    params.Env == 'Test'
-                }
-            }
+          
             steps {
                 echo 'Package the code'
                 echo "Packaging  ${params.APPVERSION} version"
