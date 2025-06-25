@@ -14,15 +14,21 @@ pipeline {
         stage('Compile') {
             agent any
             steps {
+                script{
                 echo 'Compile the code'
                 echo "Compiling for ${params.Env} environment"
+                sh "mvn compile"
             }
+        }
         }
         stage('CodeReview') {
             agent any
             steps {
+                script{
                 echo 'Review the code'
+                echo "pmd:pmd"
             }
+        }
         }
         stage('UniTest') {
             agent any
@@ -32,26 +38,38 @@ pipeline {
                 }
             }
             steps {
+                script{
                 echo 'Test the code'
+                sh "mvn test"
             }
+        }
         }
         stage('CoverageAnalysis') {
             steps {
+                script{
                 echo 'Static Code Coverage'
+                sh "mvn verify"
             }
+        }
         }
         stage('Package') {
             agent {label 'linux_slave'}
           
             steps {
+                script{
                 echo 'Package the code'
                 echo "Packaging  ${params.APPVERSION} version"
+                sh "mvn package"
             }
+        }
         }
         stage('PubishtoJfrog') {
             steps {
+                script{
                 echo 'Publish the artifcat to jfrog'
+                sh "mvn -U deploy -s settings.xml"
             }
+        }
         }
     }
 }
