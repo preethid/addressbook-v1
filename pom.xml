@@ -5,7 +5,7 @@
     <groupId>com.preethidevops.tutorial</groupId>
     <artifactId>addressbook</artifactId>
     <packaging>war</packaging>
-    <version>6.0</version>
+    <version>9.0</version>
     <name>Vaadin Addressbook example</name>
 
     <properties>
@@ -168,6 +168,13 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>3.4.0</version>
+        </plugin>
+
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
@@ -515,11 +522,16 @@
             </reporting>
         </profile>
     </profiles>
- <distributionManagement>
-    <repository>
-        <id>central</id>
-        <name>a0qh9y2t72ku7-artifactory-primary-0-releases</name>
-        <url>https://preethidevopsdemo.jfrog.io/artifactory/addbook-libs-release-local</url>
-    </repository>
+<distributionManagement>
+  <repository>
+    <id>releases</id>
+    <name>Artifactory Releases</name>
+    <url>https://nprabhu.jfrog.io/artifactory/prabhu-demo-libs-release</url>
+  </repository>
+  <snapshotRepository>
+    <id>snapshots</id>
+    <name>Artifactory Snapshots</name>
+    <url>https://nprabhu.jfrog.io/artifactory/prabhu-demo-libs-snapshot</url>
+  </snapshotRepository>
 </distributionManagement>
 </project>
