@@ -3,13 +3,13 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <servers>
     <server>
-      <username>devopstraineronline@gmail.com</username>
-      <password>cmVmdGtuOjAxOjE3NzY5OTQwMjQ6WTlpVkdPZ1hNQVFXdnlnbXdNR3FpaThuT0N2</password>
+      <username>aws9337597101@gmail.com</username>
+      <password>cmVmdGtuOjAxOjE3ODI4MDM4Njg6ZEZLYVg4TXpQNzBONjVkM1VWNTVDSkR3NjFR</password>
       <id>central</id>
     </server>
     <server>
-      <username>devopstraineronline@gmail.com</username>
-      <password>cmVmdGtuOjAxOjE3NzY5OTQwMjQ6WTlpVkdPZ1hNQVFXdnlnbXdNR3FpaThuT0N2</password>
+      <username>aws9337597101@gmail.com</username>
+      <password>cmVmdGtuOjAxOjE3ODI4MDM4Njg6ZEZLYVg4TXpQNzBONjVkM1VWNTVDSkR3NjFR</password>
       <id>snapshots</id>
     </server>
   </servers>
@@ -21,14 +21,14 @@
             <enabled>false</enabled>
           </snapshots>
           <id>central</id>
-          <name>addbook-libs-release</name>
-          <url>https://preethidevopsdemo.jfrog.io/artifactory/addbook-libs-release</url>
+          <name>war-file-management-libs-snapshot</name>
+          <url>https://trialcnc18q.jfrog.io/artifactory/war-file-management-libs-snapshot</url>
         </repository>
         <repository>
           <snapshots />
           <id>snapshots</id>
-          <name>addbook-libs-snapshot</name>
-          <url>https://preethidevopsdemo.jfrog.io/artifactory/addbook-libs-snapshot</url>
+          <name>war-file-management-libs-snapshot</name>
+          <url>https://trialcnc18q.jfrog.io/artifactory/war-file-management-libs-snapshot</url>
         </repository>
       </repositories>
       <pluginRepositories>
@@ -37,14 +37,14 @@
             <enabled>false</enabled>
           </snapshots>
           <id>central</id>
-          <name>addbook-libs-release</name>
-          <url>https://preethidevopsdemo.jfrog.io/artifactory/addbook-libs-release</url>
+          <name>war-file-management-libs-snapshot</name>
+          <url>https://trialcnc18q.jfrog.io/artifactory/war-file-management-libs-snapshot</url>
         </pluginRepository>
         <pluginRepository>
           <snapshots />
           <id>snapshots</id>
-          <name>addbook-libs-snapshot</name>
-          <url>https://preethidevopsdemo.jfrog.io/artifactory/addbook-libs-snapshot</url>
+          <name>war-file-management-libs-snapshot</name>
+          <url>https://trialcnc18q.jfrog.io/artifactory/war-file-management-libs-snapshot</url>
         </pluginRepository>
       </pluginRepositories>
       <id>artifactory</id>
