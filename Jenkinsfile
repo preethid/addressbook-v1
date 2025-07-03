@@ -11,21 +11,18 @@ pipeline {
     }
     environment {
        BUILD_SERVER="ec2-user@172.31.1.155"
+       IMAGE_NAME='devopstrainer/java-mvn-privaterepos:$BUILD_NUMBER'
+       DEPLOY_SERVER='ec2-user@xxx'
     }
     stages {
         stage('Compile') {
             agent any
             steps {
-                script{
-                    sshagent(['slave2']) {
-                echo 'Compile the code'
-                echo "Compiling for ${params.Env} environment"
-               // sh "mvn compile"
-               sh "scp  -o StrictHostKeyChecking=no server-script.sh ${BUILD_SERVER}:/home/ec2-user"
-               sh "ssh  -o StrictHostKeyChecking=no ${BUILD_SERVER} 'bash /home/ec2-user/server-script.sh'"
-              
+                 script{
+                echo 'Compiline the code'
+                echo "Compiling  ${params.APPVERSION} version"
+                sh "mvn compile"
             }
-        }
         }
         }
         stage('CodeReview') {
@@ -52,7 +49,7 @@ pipeline {
         }
         }
         stage('CoverageAnalysis') {
-            agent any
+            agent any // {label 'linux_slave'}
             steps {
                 script{
                 echo 'Static Code Coverage'
@@ -60,35 +57,56 @@ pipeline {
             }
         }
         }
-        stage('Package') {
-            agent {label 'linux_slave'}
-          input {
-                message "Archive the artifacts"
-                ok "select the Platform"
-                parameters{
-                    choice(name: 'Platform', choices: ['Jfrog', 'Nexus'], description: 'Select the platform for deployment')
-                }
-            }
+        stage('Containerize the application') {
+        agent any
+        //   input {
+        //         message "Archive the artifacts"
+        //         ok "select the Platform"
+        //         parameters{
+        //             choice(name: 'Platform', choices: ['Jfrog', 'Nexus'], description: 'Select the platform for deployment')
+        //         }
+        //     }
             steps {
-                script{
-                echo 'Package the code'
-                echo "Packaging  ${params.APPVERSION} version"
-                sh "mvn package"
-            }
+               
+            script{
+               // sshagent(['slave2']) {
+                withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'password', usernameVariable: 'username')]) {
+                echo 'Compile the code'
+                echo "Compiling for ${params.Env} environment"
+               // sh "mvn compile"
+               sh "scp  -o StrictHostKeyChecking=no server-script.sh ${BUILD_SERVER}:/home/ec2-user"
+               sh "ssh  -o StrictHostKeyChecking=no ${BUILD_SERVER} bash /home/ec2-user/server-script.sh ${IMAGE_NAME}"
+               sh "ssh ${BUILD_SERVER} sudo docker login -u ${username} -p ${password}"
+               sh "ssh ${BUILD_SERVER} sudo docker push ${IMAGE_NAME}"
+              
+           // }
         }
         }
-        stage('PubishtoJfrog') {
-            agent any
-            input{
-                message "Do you want to publish the artifact to JFrog?"
-                ok "Yes, publish it"
-            }
-            
+        }
+        }
+        stage('Deploying the application') {
+        agent any
+        //   input {
+        //         message "Archive the artifacts"
+        //         ok "select the Platform"
+        //         parameters{
+        //             choice(name: 'Platform', choices: ['Jfrog', 'Nexus'], description: 'Select the platform for deployment')
+        //         }
+        //     }
             steps {
-                script{
-                echo 'Publish the artifcat to jfrog'
-                sh "mvn -U deploy -s settings.xml"
-            }
+               
+            script{
+               sshagent(['slave2']) {
+                withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'password', usernameVariable: 'username')]) {
+               
+               sh "ssh  -o StrictHostKeyChecking=no ${DEPLOY_SERVER} sudo yum install docker -y"
+               sh "ssh  ${DEPLOY_SERVER} sudo systemctl start docker"
+               sh "ssh ${DEPLOY_SERVER} sudo docker login -u ${username} -p ${password}"
+               sh "ssh ${DEPLOY_SERVER} sudo docker run -itd -P ${IMAGE_NAME}"
+              
+           // }
+        }
+        }
         }
         }
     }
