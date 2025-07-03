@@ -59,15 +59,7 @@ pipeline {
         }
         stage('Containerize the application') {
         agent any
-        //   input {
-        //         message "Archive the artifacts"
-        //         ok "select the Platform"
-        //         parameters{
-        //             choice(name: 'Platform', choices: ['Jfrog', 'Nexus'], description: 'Select the platform for deployment')
-        //         }
-        //     }
-            steps {
-               
+            steps {       
             script{
                // sshagent(['slave2']) {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'password', usernameVariable: 'username')]) {
@@ -77,8 +69,7 @@ pipeline {
                sh "scp  -o StrictHostKeyChecking=no server-script.sh ${BUILD_SERVER}:/home/ec2-user"
                sh "ssh  -o StrictHostKeyChecking=no ${BUILD_SERVER} bash /home/ec2-user/server-script.sh ${IMAGE_NAME}"
                sh "ssh ${BUILD_SERVER} sudo docker login -u ${username} -p ${password}"
-               sh "ssh ${BUILD_SERVER} sudo docker push ${IMAGE_NAME}"
-              
+               sh "ssh ${BUILD_SERVER} sudo docker push ${IMAGE_NAME}"        
            // }
         }
         }
@@ -86,15 +77,7 @@ pipeline {
         }
         stage('Deploying the application') {
         agent any
-        //   input {
-        //         message "Archive the artifacts"
-        //         ok "select the Platform"
-        //         parameters{
-        //             choice(name: 'Platform', choices: ['Jfrog', 'Nexus'], description: 'Select the platform for deployment')
-        //         }
-        //     }
-            steps {
-               
+            steps {   
             script{
                sshagent(['slave2']) {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'password', usernameVariable: 'username')]) {
@@ -103,7 +86,6 @@ pipeline {
                sh "ssh  ${DEPLOY_SERVER} sudo systemctl start docker"
                sh "ssh ${DEPLOY_SERVER} sudo docker login -u ${username} -p ${password}"
                sh "ssh ${DEPLOY_SERVER} sudo docker run -itd -P ${IMAGE_NAME}"
-              
            // }
         }
         }
