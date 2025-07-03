@@ -1,0 +1,53 @@
+pipeline {
+    agent any
+    parameters{
+        string (name: 'Env' ,defaultValue: 'Test' ,description: 'version to deploy')
+        booleanParam (name: 'executeTests' ,defaultValue: 'true' ,description: 'Decide to run test cases')
+        choice (name: 'APPVERSION' ,choice: ['1.1','1.2','1.3'] ,description: 'select application version')
+
+    }
+    stages {
+        stage('compile-code') {
+            steps {
+                echo 'Compiling the code'
+                echo 'Compiling in ${params.Env} environment'
+            }
+        }
+  
+        stage('Review-code') {
+            steps {
+                echo 'Reviewing the code using sure-fires plugin'
+            }
+        }
+   
+        stage('Unit test') {
+            when{
+                expression{
+                    params.executeTests == true
+                }
+            }
+            steps {
+                echo ' Test the code '
+            }
+        }
+    
+        stage('Code analysis') {
+            steps {
+                echo 'Code analysis sucessfull using jacoco plugin'
+            }
+        }
+    
+        stage('code package') {
+            steps {
+                echo 'packaging the code sucessful'
+                echo 'packaging version is ${params.APPVERSION}'
+            }
+        }
+  
+        stage('Deploy') {
+            steps {
+                echo 'Attaching the artifacts inside the jfrog'
+            }
+        }
+    }
+}
