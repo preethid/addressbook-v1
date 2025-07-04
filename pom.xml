@@ -518,8 +518,8 @@
  <distributionManagement>
     <repository>
         <id>central</id>
-        <name>a0qh9y2t72ku7-artifactory-primary-0-releases</name>
-        <url>https://preethidevopsdemo.jfrog.io/artifactory/addbook-libs-release-local</url>
+        <name>a0gmeoviecehz-artifactory-primary-0-releases</name>
+        <url>https://trialcnc18q.jfrog.io/artifactory/artifact-repo-libs-release-local</url>
     </repository>
 </distributionManagement>
 </project>
