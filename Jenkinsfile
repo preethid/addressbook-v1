@@ -13,6 +13,8 @@ pipeline {
        BUILD_SERVER="ec2-user@172.31.9.87"
        IMAGE_NAME='devopstrainer/java-mvn-privaterepos'
       // DEPLOY_SERVER='ec2-user@172.31.2.38'
+       ACCESS_KEY=credentials('ACCESS_KEY')
+       SECRET_ACCESS_KEY=credentials('SECRET_ACCESS_KEY')
     }
     stages {
         stage('Compile') {
@@ -97,8 +99,8 @@ pipeline {
                 script {
                 echo 'Deploying to EKS'
                 sh "aws --version"
-                sh "aws configure set aws_access_key_id x"
-                sh "aws configure set aws_secret_access_key x"
+                sh "aws configure set aws_access_key_id ${ACCESS_KEY}"
+                sh "aws configure set aws_secret_access_key ${SECRET_ACCESS_KEY}"
                 sh "aws eks update-kubeconfig --region us-east-1 --name eks-test"
                 sh "kubectl get nodes"
                 sh "envsubst < k8s-manifests/java-mvn-app.yaml | kubectl apply -f -"
