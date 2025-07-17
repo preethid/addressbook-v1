@@ -69,7 +69,7 @@ pipeline {
                 echo "Compiling for ${params.Env} environment"
                // sh "mvn compile"
                sh "scp  -o StrictHostKeyChecking=no server-script.sh ${BUILD_SERVER}:/home/ec2-user"
-               sh "ssh  -o StrictHostKeyChecking=no ${BUILD_SERVER} bash /home/ec2-user/server-script.sh ${IMAGE_NAME} $${BUILD_NUMBER}"
+               sh "ssh  -o StrictHostKeyChecking=no ${BUILD_SERVER} bash /home/ec2-user/server-script.sh ${IMAGE_NAME} ${BUILD_NUMBER}"
                sh "ssh ${BUILD_SERVER} sudo docker login -u ${username} -p ${password}"
                sh "ssh ${BUILD_SERVER} sudo docker push ${IMAGE_NAME}:${BUILD_NUMBER}"        
            }
