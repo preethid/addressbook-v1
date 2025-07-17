@@ -17,4 +17,4 @@ fi
 
 cd /home/ec2-user/addressbook-v1
 # mvn compile
-sudo docker build -t $1:$2.
+sudo docker build -t $1:$2 .
