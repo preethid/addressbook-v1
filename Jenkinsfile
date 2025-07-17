@@ -105,6 +105,8 @@ pipeline {
                 sh "kubectl get nodes"
                 sh "envsubst < k8s-manifests/java-mvn-app.yaml | kubectl apply -f -"
                 sh "kubectl get all"
+                }
+            }
         }
     }
 }
