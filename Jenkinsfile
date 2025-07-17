@@ -10,9 +10,9 @@ pipeline {
 
     }
     environment {
-       BUILD_SERVER="ec2-user@172.31.3.54"
-       IMAGE_NAME='devopstrainer/java-mvn-privaterepos:$BUILD_NUMBER'
-       DEPLOY_SERVER='ec2-user@172.31.2.38'
+       BUILD_SERVER="ec2-user@172.31.9.87"
+       IMAGE_NAME='devopstrainer/java-mvn-privaterepos'
+      // DEPLOY_SERVER='ec2-user@172.31.2.38'
     }
     stages {
         stage('Compile') {
@@ -67,29 +67,42 @@ pipeline {
                 echo "Compiling for ${params.Env} environment"
                // sh "mvn compile"
                sh "scp  -o StrictHostKeyChecking=no server-script.sh ${BUILD_SERVER}:/home/ec2-user"
-               sh "ssh  -o StrictHostKeyChecking=no ${BUILD_SERVER} bash /home/ec2-user/server-script.sh ${IMAGE_NAME}"
+               sh "ssh  -o StrictHostKeyChecking=no ${BUILD_SERVER} bash /home/ec2-user/server-script.sh ${IMAGE_NAME} $${BUILD_NUMBER}"
                sh "ssh ${BUILD_SERVER} sudo docker login -u ${username} -p ${password}"
-               sh "ssh ${BUILD_SERVER} sudo docker push ${IMAGE_NAME}"        
+               sh "ssh ${BUILD_SERVER} sudo docker push ${IMAGE_NAME}:${BUILD_NUMBER}"        
            }
         }
         }
         }
         }
-        stage('Deploying the application') {
-        agent any
-            steps {   
-            script{
-               sshagent(['slave2']) {
-                withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'password', usernameVariable: 'username')]) {
+        // stage('Deploying the application') {
+        // agent any
+        //     steps {   
+        //     script{
+        //        sshagent(['slave2']) {
+        //         withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'password', usernameVariable: 'username')]) {
                
-               sh "ssh  -o StrictHostKeyChecking=no ${DEPLOY_SERVER} sudo yum install docker -y"
-               sh "ssh  ${DEPLOY_SERVER} sudo systemctl start docker"
-               sh "ssh ${DEPLOY_SERVER} sudo docker login -u ${username} -p ${password}"
-               sh "ssh ${DEPLOY_SERVER} sudo docker run -itd -P ${IMAGE_NAME}"
-           }
-        }
-        }
-        }
+        //        sh "ssh  -o StrictHostKeyChecking=no ${DEPLOY_SERVER} sudo yum install docker -y"
+        //        sh "ssh  ${DEPLOY_SERVER} sudo systemctl start docker"
+        //        sh "ssh ${DEPLOY_SERVER} sudo docker login -u ${username} -p ${password}"
+        //        sh "ssh ${DEPLOY_SERVER} sudo docker run -itd -P ${IMAGE_NAME}:${BUILD_NUMBER}"
+        //    }
+        // }
+        // }
+        // }
+        // }
+        stage('DeploytoEKS'){
+            agent any
+            steps {
+                script {
+                echo 'Deploying to EKS'
+                sh "aws --version"
+                sh "aws configure set aws_access_key_id x"
+                sh "aws configure set aws_secret_access_key x"
+                sh "aws eks update-kubeconfig --region us-east-1 --name eks-test"
+                sh "kubectl get nodes"
+                sh "envsubst < k8s-manifests/java-mvn-app.yaml | kubectl apply -f -"
+                sh "kubectl get all"
         }
     }
 }
