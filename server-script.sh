@@ -17,5 +17,5 @@ fi
 
 cd /home/ec2-user/addressbook-v1
 # mvn compile
-git chekcout demo-5
+git checkout demo-5
 sudo docker build -t $1:$2 .
