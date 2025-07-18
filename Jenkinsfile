@@ -10,11 +10,14 @@ pipeline {
 
     }
     environment {
-       BUILD_SERVER="ec2-user@172.31.9.87"
+       BUILD_SERVER="ec2-user@172.31.10.224"
        IMAGE_NAME='devopstrainer/java-mvn-privaterepos'
       // DEPLOY_SERVER='ec2-user@172.31.2.38'
-       ACCESS_KEY=credentials('ACCESS_KEY')
-       SECRET_ACCESS_KEY=credentials('SECRET_ACCESS_KEY')
+    //    ACCESS_KEY=credentials('ACCESS_KEY')
+    //    SECRET_ACCESS_KEY=credentials('SECRET_ACCESS_KEY')
+        GIT_CREDENTIALS_ID = 'GIT_CREDENTIALS_ID' // The username-password type ID of the Jenkins credentials
+        GIT_USERNAME = 'preethid'
+        GIT_EMAIL = 'preethi@example.com'
     }
     stages {
         stage('Compile') {
@@ -93,18 +96,25 @@ pipeline {
         // }
         // }
         // }
-        stage('DeploytoEKS'){
+        stage('DeploytoEKS via Argocd'){
             agent any
             steps {
                 script {
                 echo 'Deploying to EKS'
-                sh "aws --version"
-                sh "aws configure set aws_access_key_id ${ACCESS_KEY}"
-                sh "aws configure set aws_secret_access_key ${SECRET_ACCESS_KEY}"
-                sh "aws eks update-kubeconfig --region us-east-1 --name test-eks"
-                sh "kubectl get nodes"
-                sh "envsubst < k8s-manifests/java-mvn-app.yaml | kubectl apply -f -"
-                sh "kubectl get all"
+                // sh "aws --version"
+                // sh "aws configure set aws_access_key_id ${ACCESS_KEY}"
+                // sh "aws configure set aws_secret_access_key ${SECRET_ACCESS_KEY}"
+                // sh "aws eks update-kubeconfig --region us-east-1 --name test-eks"
+                //sh "kubectl get nodes"
+                  withCredentials([usernamePassword(credentialsId: "${GIT_CREDENTIALS_ID}", passwordVariable: 'GIT_TOKEN', usernameVariable: 'GIT_USER')]) {
+                 sh 'envsubst < java-mvn-app-var.yaml > k8s-manifests/java-mvn-app.yaml'
+
+                 sh "git config user.email ${GIT_EMAIL}"
+                 sh "git config user.name ${GIT_USERNAME}"
+                 sh "git add k8s-manifests/java-mvn-app.yml"
+                 sh "git commit -m 'Triggered Build: ${env.BUILD_NUMBER}'"
+                 sh "git push https://${GIT_USER}:${GIT_TOKEN}@github.com/preethid/addressbook-v1.git HEAD:demo-5"
+                }
                 }
             }
         }

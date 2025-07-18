@@ -9,10 +9,10 @@ if [ -d "addressbook-v1" ]
 then
   echo "repo is cloned and exists"
   cd /home/ec2-user/addressbook-v1
-  git pull origin demo-4
+  git pull origin demo-5
 else
   git clone https://github.com/preethid/addressbook-v1.git
-  git checkout demo-4
+  git checkout demo-5
 fi
 
 cd /home/ec2-user/addressbook-v1
