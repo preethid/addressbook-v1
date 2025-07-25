@@ -10,9 +10,9 @@ pipeline {
 
     }
     environment {
-       BUILD_SERVER="ec2-user@172.31.3.54"
+       BUILD_SERVER="ec2-user@172.31.5.179"
        IMAGE_NAME='devopstrainer/java-mvn-privaterepos:$BUILD_NUMBER'
-       DEPLOY_SERVER='ec2-user@172.31.2.38'
+       //DEPLOY_SERVER='ec2-user@172.31.2.38'
     }
     stages {
         stage('Compile') {
@@ -57,6 +57,7 @@ pipeline {
             }
         }
         }
+       
         stage('Containerize the application') {
         agent any
             steps {       
@@ -75,17 +76,30 @@ pipeline {
         }
         }
         }
+         stage("Provision the infrastructure") {
+            agent any
+            steps {
+                script{
+                echo 'Provision the infrastructure'
+                dir('terraform') {
+                    sh "terraform init"
+                    sh "terraform apply -auto-approve"
+                    EC2_PUBLIC_IP = sh(script: "terraform output ec2_public_ip", returnStdout: true).trim()
+                }
+            }
+        }
+        }
         stage('Deploying the application') {
         agent any
             steps {   
             script{
                sshagent(['slave2']) {
+                echo "${EC2_PUBLIC_IP}"
                 withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'password', usernameVariable: 'username')]) {
-               
-               sh "ssh  -o StrictHostKeyChecking=no ${DEPLOY_SERVER} sudo yum install docker -y"
-               sh "ssh  ${DEPLOY_SERVER} sudo systemctl start docker"
-               sh "ssh ${DEPLOY_SERVER} sudo docker login -u ${username} -p ${password}"
-               sh "ssh ${DEPLOY_SERVER} sudo docker run -itd -P ${IMAGE_NAME}"
+               sh "ssh  -o StrictHostKeyChecking=no ec2-user@${EC2_PUBLIC_IP} sudo yum install docker -y"
+               sh "ssh  ec2-user@${EC2_PUBLIC_IP} sudo systemctl start docker"
+               sh "ssh ec2-user@${EC2_PUBLIC_IP} sudo docker login -u ${username} -p ${password}"
+               sh "ssh ec2-user@${EC2_PUBLIC_IP} sudo docker run -itd -p 80:8080 ${IMAGE_NAME}"
            }
         }
         }
