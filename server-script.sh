@@ -12,7 +12,7 @@ then
   git pull origin demo-tf
 else
   git clone https://github.com/preethid/addressbook-v1.git
-  cd addressbook-v1
+  cd /home/ec2-user/addressbook-v1
   git checkout demo-tf
 fi
 
