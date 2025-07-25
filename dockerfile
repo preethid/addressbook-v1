@@ -11,7 +11,7 @@ copy ./src /app/src
 copy ./settingscopy.xml /app/settings.xml
 # Build the WAR file
 RUN mvn package
-Run mvn -U deploy -s settings.xml
+#Run mvn -U deploy -s settings.xml
 
 
 # Stage 2: Production stage
