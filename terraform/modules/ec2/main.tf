@@ -3,8 +3,8 @@ resource "aws_security_group" "mywebsecurity" {
  //vpc_id      =  var.vpc_id
  ingress {
    description = "HTTP"
-   from_port   = 80
-   to_port     = 80
+   from_port   = 8080
+   to_port     = 8080
    protocol    = "tcp"
    cidr_blocks = ["0.0.0.0/0"]
  }
@@ -44,7 +44,7 @@ resource "aws_instance" "webserver" {
  associate_public_ip_address = true
  //subnet_id = var.subnet_id
  vpc_security_group_ids = [aws_security_group.mywebsecurity.id]
- key_name="aws"
+ key_name="ansible"
  //user_data =file("server-script.sh")//
  tags={
    Name= "${var.env}-webserver"

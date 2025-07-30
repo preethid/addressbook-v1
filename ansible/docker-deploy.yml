@@ -1,0 +1,29 @@
+---
+- hosts: aws_ec2
+  become: true
+  become_user: root
+  # vars_prompt:
+  #    prompt: Enter the reg password
+  #    name: DOCKER_REG_PASSWORD
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  tasks:
+  - name: Install docker
+    yum: name=docker state=present
+  - name: Start docker
+    service: name=docker state=started
+  # - name: run the docker image
+  #   command: docker run -itd -P nginx
+  # - name: Install docker python modules
+  #   pip: name=docker state=present
+  # - name: Install urllib3 with compatible version
+  #   pip: name=urllib3<2.0 state=present
+  # - name: Run the sample dockerimage
+  #   docker_container: 
+  #       name: addbook
+  #       image: devopstrainer/deploy:v1
+  #       published_ports: "9090:8080"
+  - name: login to private registry
+    docker_login: username=devopstrainer password={{DOCKER_REG_PASSWORD}}
+  - name: Run the addbook image
+    docker_container: name=addbook image={{DOCKER_IMAGE}} published_ports="8080:8080"
