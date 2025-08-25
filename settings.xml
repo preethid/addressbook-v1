@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.2.0 http://maven.apache.org/xsd/settings-1.2.0.xsd" xmlns="http://maven.apache.org/SETTINGS/1.2.0"
+<settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.2.0 https://maven.apache.org/xsd/settings-1.2.0.xsd" xmlns="http://maven.apache.org/SETTINGS/1.2.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <servers>
     <server>
-      <username>devopstraineronline@gmail.com</username>
-      <password>xx</password>
+      <username>dnvsraj@rediffmail.com</username>
+      <password>cmVmdGtuOjAxOjE3ODY1MDA4MDQ6MVRoeWFvM2V2b040MEgycVg3YkJzb3lUNlNl</password>
       <id>central</id>
     </server>
     <server>
-      <username>devopstraineronline@gmail.com</username>
-      <password>xx</password>
+      <username>dnvsraj@rediffmail.com</username>
+      <password>cmVmdGtuOjAxOjE3ODY1MDA4MDQ6MVRoeWFvM2V2b040MEgycVg3YkJzb3lUNlNl</password>
       <id>snapshots</id>
     </server>
   </servers>
@@ -21,14 +21,14 @@
             <enabled>false</enabled>
           </snapshots>
           <id>central</id>
-          <name>addbook-libs-release</name>
-          <url>https://preethidevopsdemo.jfrog.io/artifactory/addbook-libs-release</url>
+          <name>test-libs-release</name>
+          <url>https://devopsdemotrial.jfrog.io/artifactory/test-libs-release</url>
         </repository>
         <repository>
           <snapshots />
           <id>snapshots</id>
-          <name>addbook-libs-snapshot</name>
-          <url>https://preethidevopsdemo.jfrog.io/artifactory/addbook-libs-snapshot</url>
+          <name>test-libs-snapshot</name>
+          <url>https://devopsdemotrial.jfrog.io/artifactory/test-libs-snapshot</url>
         </repository>
       </repositories>
       <pluginRepositories>
@@ -37,14 +37,14 @@
             <enabled>false</enabled>
           </snapshots>
           <id>central</id>
-          <name>addbook-libs-release</name>
-          <url>https://preethidevopsdemo.jfrog.io/artifactory/addbook-libs-release</url>
+          <name>test-libs-release</name>
+          <url>https://devopsdemotrial.jfrog.io/artifactory/test-libs-release</url>
         </pluginRepository>
         <pluginRepository>
           <snapshots />
           <id>snapshots</id>
-          <name>addbook-libs-snapshot</name>
-          <url>https://preethidevopsdemo.jfrog.io/artifactory/addbook-libs-snapshot</url>
+          <name>test-libs-snapshot</name>
+          <url>https://devopsdemotrial.jfrog.io/artifactory/test-libs-snapshot</url>
         </pluginRepository>
       </pluginRepositories>
       <id>artifactory</id>
