@@ -13,7 +13,7 @@ RUN mvn dependency:go-offline
 # Copy the application source code
 
 copy ./src /app/src
-copy ./settingscopy.xml /app/settings.xml
+copy ./settings.xml /app/settings.xml
 
 # Build the WAR file
 RUN mvn package
