@@ -118,7 +118,7 @@ pipeline {
                 }
             }
         }
-        stage('Test/deploy the docker image'){//on build server
+        stage('Test/deploy the docker image'){//on deploy server
             agent any
             steps{
                 script{
@@ -137,6 +137,7 @@ pipeline {
                 }
             }
         }
+       
     }
 }
 
