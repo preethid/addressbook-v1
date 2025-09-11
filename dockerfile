@@ -18,7 +18,7 @@ copy ./settings.xml /app/settings.xml
 # Build the WAR file
 RUN mvn package
 
-Run mvn -U deploy -s settings.xml
+#Run mvn -U deploy -s settings.xml
 
 # Stage 2: Production stage
 FROM tomcat:8.5.78-jdk11-openjdk-slim
