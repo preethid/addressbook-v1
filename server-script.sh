@@ -21,12 +21,12 @@ if [ -d "addressbook-v1" ]
 then
   echo "repo is cloned and exists"
   cd /home/ec2-user/addressbook-v1
-  git pull origin docker-demo
+  git pull origin k8s-demo
 else
   git clone https://github.com/preethid/addressbook-v1.git
 fi
 
 cd /home/ec2-user/addressbook-v1
-git checkout docker-demo
+git checkout k8s-demo
 # mvn compile
 sudo docker build -t $1 .
