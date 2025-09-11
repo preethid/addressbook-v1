@@ -29,4 +29,4 @@ fi
 cd /home/ec2-user/addressbook-v1
 git checkout k8s-demo
 # mvn compile
-sudo docker build -t $1 .
+sudo docker build -t $1:$2 .
