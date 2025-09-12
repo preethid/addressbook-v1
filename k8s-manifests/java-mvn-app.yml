@@ -18,7 +18,7 @@ spec:
       - name: docker-key
       containers:
       - name: sample-ctr
-        image: devopstrainer/java-mvn-privaterepos:3
+        image: devopstrainer/java-mvn-privaterepos:4
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
