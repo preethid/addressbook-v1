@@ -2,9 +2,9 @@ version: 0.0
 os: linux
 files:
   - source: /addressbook.war
-    destination: /usr/share/tomcat/webapps
+    destination: /usr/local/tomcat/webapps
 permissions:
-  - object: /usr/share/tomcat/webapps
+  - object: /usr/local/tomcat/webapps
     pattern: '**'
     mode: '0755' 
     owner: root
