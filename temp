@@ -1,0 +1,9 @@
+wget https://aws-codedeploy-ap-south-1.s3.ap-south-1.amazonaws.com/latest/install
+chmod +x ./install
+sudo ./install auto
+# Checking CodeDeploy Agent status
+sudo service codedeploy-agent status
+6  yum install tomcat -y
+https://acloudxpert.com/install-tomcat-on-amazon-linux/
+7  systemctl start tomcat
+8  cd /usr/share/tomcat/webapps/
