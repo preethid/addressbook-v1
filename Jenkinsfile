@@ -12,7 +12,7 @@ pipeline {
         stage('Compile') {
             steps {
                 script{
-                echo 'Compiling the code in ${params.Env} environment'
+                echo "Compiling the code in ${params.Env} environment"
                 }
             }
         }
@@ -36,7 +36,7 @@ pipeline {
         stage('CoverageAnalysis') {
             steps {
                 script{
-                echo 'Static Code Coverage Analysis of ${params.APPVERSION} version'
+                echo "Static Code Coverage Analysis of ${params.APPVERSION} version"
             }
         }
         }
