@@ -79,7 +79,7 @@ pipeline {
             }
         }
     }
-     stage('Deloy the docker image') {
+     stage('Deploy the docker image') {
             agent any
             steps {
                 script{
