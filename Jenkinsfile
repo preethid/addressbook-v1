@@ -74,6 +74,7 @@ pipeline {
                 sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER} bash /home/ec2-user/server-script.sh ${IMAGE_NAME}"
                 sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER} sudo docker login -u ${username} -p ${password}"
                 sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER} sudo docker push ${IMAGE_NAME}"
+            
                     }
                 }
             }
