@@ -13,6 +13,7 @@ pipeline {
     }
     environment{
         BUILD_SERVER='ec2-user@172.31.15.44'
+        IMAGE_NAME='devopstrainer/java-mvn-privaterepos:$BUILD_NUMBER'
     }
 
     stages {
@@ -60,15 +61,19 @@ pipeline {
             }
         }
         }
-        stage('Package') {
+        stage('Containerise the code n push the image to dockerhub') {
             agent any
             steps {
                 script{
                 sshagent(['slave2']) {
                 echo 'Packaging the code'
+                withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'password', usernameVariable: 'username')]) {
                 sh "scp -o StrictHostKeyChecking=no server-script.sh ${BUILD_SERVER}:/home/ec2-user/"
-                sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER} 'bash ~/server-script.sh'"
+                sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER} bash ~/server-script.sh ${IMAGE_NAME}"
+                sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER} sudo docker login -u ${username} -p ${password}"
+                sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER} sudo docker push ${IMAGE_NAME}"
                     }
+                }
             }
         }
     }
