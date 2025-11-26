@@ -11,10 +11,10 @@ pipeline {
         choice(name:'APPVERSION',choices:['1.1','1.2','1.3'])
     }
      environment{
-        BUILD_SERVER='ec2-user@172.31.14.162'  //(creating manually)
+        BUILD_SERVER='ec2-user@172.31.2.193'  //(creating manually)
        // DEPLOY_SERVER='ec2-user@172.31.4.216' (creating wth terraform)
         IMAGE_NAME='devopstrainer/addbook:$BUILD_NUMBER'
-        ACM_IP='ec2-user@172.31.3.157'
+        ACM_IP='ec2-user@172.31.2.234'
          AWS_ACCESS_KEY_ID=credentials('ACCESS_KEY')
         AWS_SECRET_ACCESS_KEY=credentials('SECRET_ACCESS_KEY')
       DOCKER_REG_PASSWORD=credentials("DOCKER_REG_PASSWORD")

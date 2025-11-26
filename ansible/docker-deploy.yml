@@ -14,10 +14,10 @@
     service: name=docker state=started
   # - name: run the docker image
   #   command: docker run -itd -P nginx
-  - name: Install docker python modules
-    pip: name=docker state=present
-  - name: Install urllib3 with compatible version
-    pip: name=urllib3<2.0 state=present
+  # - name: Install docker python modules
+  #   pip: name=docker state=present
+  # - name: Install urllib3 with compatible version
+  #   pip: name=urllib3<2.0 state=present
   # - name: Run the sample dockerimage
   #   docker_container: 
   #       name: addbook
