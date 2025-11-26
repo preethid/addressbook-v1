@@ -5,8 +5,8 @@
   # vars_prompt:
   #    prompt: Enter the reg password
   #    name: DOCKER_REG_PASSWORD
-  vars:
-    ansible_python_interpreter: /usr/bin/python3
+  # vars:
+  #   ansible_python_interpreter: /usr/bin/python3
   tasks:
   - name: Install docker
     yum: name=docker state=present
