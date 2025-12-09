@@ -11,7 +11,9 @@ pipeline {
         choice(name: 'APPVERSION', choices: ['1.1', '1.2', '1.3'], description: 'Select application version')
 
     }
-
+    environment{
+        BUILD_SERVER = 'ec2-user@172.31.5.94'
+    }
     stages {
         stage('Compile') {
             agent any
@@ -62,9 +64,16 @@ pipeline {
             agent any
             steps {
                 script{
+                   sshagent(['slave2']) {
                 echo "Packaging the code in ${params.APPVERSION} environments"
+                sh "scp -o StricktHostKeyChecking=no server-script.sh ${BUILD_SERVER}:/home/ec2-user/"
+                sh "ssh  -o StricktHostKeyChecking=no ${BUILD_SERVER} 'bash /home/ec2-user/server-script.sh'"
+                }
+                
+
                 }
             }
         }
     }
 }
+
