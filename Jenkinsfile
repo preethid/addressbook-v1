@@ -16,7 +16,7 @@ pipeline {
         stage('Compile') {
             steps {
                 script{
-                     echo 'Compiling the code in ${params.Env} environments'
+                     echo "Compiling the code in ${params.Env} environments"
                      sh "mvn compile"
                 }
                
@@ -28,7 +28,7 @@ pipeline {
             }
             steps {
                 script{
-                echo 'Running unit tests in ${params.Env} environments'
+                echo "Running unit tests in ${params.Env} environments"
                 sh "mvn test"
                 }
             }
@@ -52,7 +52,7 @@ pipeline {
            stage('Package') {
             steps {
                 script{
-                echo 'Packaging the code in ${params.APPVERSION} environments'
+                echo "Packaging the code in ${params.APPVERSION} environments"
                 }
             }
         }
