@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent none
 
     tools {
         maven 'mymaven'
@@ -14,6 +14,7 @@ pipeline {
 
     stages {
         stage('Compile') {
+            agent any
             steps {
                 script{
                      echo "Compiling the code in ${params.Env} environments"
@@ -23,6 +24,7 @@ pipeline {
             }
         }
         stage('Unit Test') {
+            agent any
             when {
                 expression { return params.executeTests == true }
             }
@@ -32,8 +34,14 @@ pipeline {
                 sh "mvn test"
                 }
             }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
         }
         stage('CodeReview') {
+            agent any
             steps {
                 script{
                 echo 'Reviewing the code'
@@ -42,6 +50,7 @@ pipeline {
             }
         }
         stage('Coverage') {
+            agent label 'linux_slave'
             steps {
                 script{
                 echo 'Checking code coverage'
@@ -50,6 +59,7 @@ pipeline {
             }
         }
            stage('Package') {
+            agent any
             steps {
                 script{
                 echo "Packaging the code in ${params.APPVERSION} environments"
