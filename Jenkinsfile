@@ -45,7 +45,7 @@ pipeline {
             steps {
                 script{
                 echo 'Checking code coverage'
-                sh "mvn verfiy"
+                sh "mvn verify"
                 }
             }
         }
