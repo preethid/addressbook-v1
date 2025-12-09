@@ -50,7 +50,7 @@ pipeline {
             }
         }
         stage('Coverage') {
-            agent label 'linux_slave'
+            agent {label 'linux_slave'}
             steps {
                 script{
                 echo 'Checking code coverage'
