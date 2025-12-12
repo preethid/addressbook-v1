@@ -1,0 +1,24 @@
+version: 0.0
+os: linux
+files:
+  - source: /addressbook.war
+    # destination: /usr/local/tomcat/webapps
+    #destination: /tmp/apache-tomcat-10.1.14/webapps
+    destination: /opt/tomcat/webapps
+permissions:
+  #- object: /usr/local/tomcat/webapps
+  #- object: /tmp/apache-tomcat-10.1.14/webapps
+  - object: /opt/tomcat/webapps
+    pattern: '**'
+    mode: '0755' 
+    owner: root
+    group: root
+    type:
+      - file
+      - directory
+hooks:
+   ApplicationStart:
+    - location: application-start-hook.sh
+      timeout: 300
+      runas: root
+

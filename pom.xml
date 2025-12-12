@@ -515,11 +515,11 @@
             </reporting>
         </profile>
     </profiles>
-   <distributionManagement>
+ <distributionManagement>
     <repository>
         <id>central</id>
-        <name>xxx</name>
-        <url>xx</url>
+        <name>a0mtonokjoolg-artifactory-primary-0-releases</name>
+        <url>https://devopsdemotrial.jfrog.io/artifactory/test-libs-release</url>
     </repository>
 </distributionManagement>
 </project>
