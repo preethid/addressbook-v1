@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent none
 
        parameters {
         string(name: 'Env', defaultValue: 'Test', description: 'Version to deploy')
@@ -9,11 +9,13 @@ pipeline {
 
     stages {
         stage('Compile') {
+            agent any
             steps {
                 echo "Compiling the code in ${params.Env} environment with version ${params.APPVERSION}"
             }
         }
          stage('UnitTest') {
+            agent any
             when {
                 expression { return params.executeTests == true }
             }
@@ -22,16 +24,19 @@ pipeline {
             }
         }
          stage('CodeReview') {
+            agent any
             steps {
                 echo 'Review the code'
             }
         }
           stage('Coverage Analysis') {
+            agent {label 'linux_slave'}
             steps {
                 echo 'Static Code Coverage Analysis'
             }
         }
           stage('Package') {
+            agent any
             input {
                 message "Do you want to proceed to Package the application?"
                 ok "Yes, Proceed"
