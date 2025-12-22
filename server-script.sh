@@ -15,4 +15,4 @@ else
 fi
 
 cd /home/ec2-user/addressbook-v1
-mvn package
+mvn compile
