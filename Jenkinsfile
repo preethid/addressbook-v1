@@ -1,6 +1,8 @@
 pipeline {
     agent none
-
+    tools{
+        maven 'mymaven'
+    }
        parameters {
         string(name: 'Env', defaultValue: 'Test', description: 'Version to deploy')
         booleanParam(name: 'executeTests', defaultValue: true, description: 'Decide to run test cases')
@@ -12,6 +14,7 @@ pipeline {
             agent any
             steps {
                 echo "Compiling the code in ${params.Env} environment with version ${params.APPVERSION}"
+                sh 'mvn compile'
             }
         }
          stage('UnitTest') {
@@ -21,18 +24,21 @@ pipeline {
             }
             steps {
                 echo 'Executing Unit Test cases'
+                sh 'mvn test'
             }
         }
          stage('CodeReview') {
             agent any
             steps {
                 echo 'Review the code'
+                sh 'mvn pmd:pmd'
             }
         }
           stage('Coverage Analysis') {
             agent {label 'linux_slave'}
             steps {
                 echo 'Static Code Coverage Analysis'
+                sh 'mvn verify'
             }
         }
           stage('Package') {
@@ -43,6 +49,7 @@ pipeline {
             }
             steps {
                 echo "Packaging the code ${params.APPVERSION}"
+                sh 'mvn package'
             }
         }
     }
