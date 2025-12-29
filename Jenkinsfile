@@ -11,6 +11,7 @@ pipeline {
     environment {
         BUILD_SERVER='ec2-user@172.31.43.53'
         IMAGE_NAME='devopstrainer/java-mvn-privaterepos:$BUILD_NUMBER'
+        DEPLOY_SERVER='ec2-user@172.31.36.190'
     }
     stages {
         stage('Compile') {
@@ -45,7 +46,7 @@ pipeline {
                 sh 'mvn verify'
             }
         }
-          stage('Package') {
+          stage('Containerize & Push') {
             agent any
             input {
                 message "Do you want to proceed to Package the application?"
@@ -66,5 +67,23 @@ pipeline {
                 
             }
         }
+    stage('Deploy the docker image') {
+            agent any
+            steps {
+                script{
+                sshagent(['slave2']) {
+                echo 'Packaging the code'
+                withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'password', usernameVariable: 'username')]) {
+                //sh "scp -o StrictHostKeyChecking=no server-script.sh ${BUILD_SERVER}:/home/ec2-user/"
+                //sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER} bash /home/ec2-user/server-script.sh ${IMAGE_NAME}"
+                sh "ssh -o StrictHostKeyChecking=no ${DEPLOY_SERVER} sudo yum install docker -y"
+                sh "ssh  ${DEPLOY_SERVER} sudo service docker start"
+                sh "ssh  ${DEPLOY_SERVER} sudo docker login -u ${username} -p ${password}"
+                sh "ssh  ${DEPLOY_SERVER} sudo docker run -itd -P ${IMAGE_NAME}"
+                    }
+                }
+            }
+        }
     }
+}
 }
