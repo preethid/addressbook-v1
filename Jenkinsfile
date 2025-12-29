@@ -9,7 +9,7 @@ pipeline {
         choice(name: 'APPVERSION', choices: ['1.1', '1.2', '1.3'], description: 'Select application version')
     }
     environment {
-        BUILD_SERVER='ec2-user@172.31.10.3'
+        BUILD_SERVER='ec2-user@172.31.43.53'
         IMAGE_NAME='devopstrainer/java-mvn-privaterepos:$BUILD_NUMBER'
     }
     stages {
@@ -38,7 +38,8 @@ pipeline {
             }
         }
           stage('Coverage Analysis') {
-            agent {label 'linux_slave'}
+           // agent {label 'linux_slave'}
+           agent any
             steps {
                 echo 'Static Code Coverage Analysis'
                 sh 'mvn verify'
