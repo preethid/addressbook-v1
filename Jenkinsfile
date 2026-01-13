@@ -11,7 +11,7 @@ pipeline {
         choice(name:'APPVERSION',choices:['1.1','1.2','1.3'])
     }
      environment{
-        BUILD_SERVER='ec2-user172.31.6.130'  //(creating manually)
+        BUILD_SERVER='ec2-user@172.31.6.130'  //(creating manually)
        // DEPLOY_SERVER='ec2-user@172.31.4.216' (creating wth terraform)
         IMAGE_NAME='devopstrainer/addbook:$BUILD_NUMBER'
         ACM_IP='ec2-user@172.31.15.16'
