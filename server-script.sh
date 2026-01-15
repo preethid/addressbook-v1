@@ -11,10 +11,11 @@ then
   cd /home/devuser/addressbook-v1
   git pull origin master
 else
-  git clone https://github.com/preethid/addressbook-v1.git
+  git clone https://github.com/AmitChakarvarty/addressbook-v1.git
 fi
 
 cd /home/devuser/addressbook-v1
 #mvn package
+
 
 sudo docker build -t $1 .
