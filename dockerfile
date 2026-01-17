@@ -7,7 +7,7 @@ COPY pom.xml /app/pom.xml
 # Download the dependencies needed for the build (cache them in a separate layer)
 RUN mvn dependency:go-offline
 # Copy the application source code
-copy ./src /app/src
+COPY ./src /app/src
 
 # Build the WAR file
 RUN mvn package
@@ -20,3 +20,4 @@ COPY --from=build-stage /app/target/*.war /usr/local/tomcat/webapps/
 EXPOSE 8080
 # Start Tomcat
 CMD ["catalina.sh", "run"]
+
