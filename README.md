@@ -1,4 +1,4 @@
-Addressbook Tutorials for CICD
+Addressbook Tutorials for CICD sample
 ====================
 #new change
 # changes for test
