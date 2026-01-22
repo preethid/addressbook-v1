@@ -19,61 +19,61 @@ pipeline {
         
      }
     stages {
-        stage('Compile') {
-            agent any
-            steps {
-                script{
-                    //  sshagent(['slave2']) {
-                echo 'Package Hello World'
-                echo "Compiling version ${params.APPVERSION}"
-                // sh "scp -o StrictHostKeyChecking=no server-script.sh ${BUILD_SERVER}:/home/ec2-user"
-                // sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER} 'bash ~/server-script.sh'"
-                sh "mvn compile"
-                //}
-                }
-            }
-        }
-        stage('UnitTest') {
-            agent any
-              when{
-                expression{
-                    params.executeTests == true
-                }
-            }
-            steps {
-                script{
-                    echo 'Run UnitTest cases for  Hello World'
-                    sh 'mvn test'
-                }
+        // stage('Compile') {
+        //     agent any
+        //     steps {
+        //         script{
+        //             //  sshagent(['slave2']) {
+        //         echo 'Package Hello World'
+        //         echo "Compiling version ${params.APPVERSION}"
+        //         // sh "scp -o StrictHostKeyChecking=no server-script.sh ${BUILD_SERVER}:/home/ec2-user"
+        //         // sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER} 'bash ~/server-script.sh'"
+        //         sh "mvn compile"
+        //         //}
+        //         }
+        //     }
+        // }
+        // stage('UnitTest') {
+        //     agent any
+        //       when{
+        //         expression{
+        //             params.executeTests == true
+        //         }
+        //     }
+        //     steps {
+        //         script{
+        //             echo 'Run UnitTest cases for  Hello World'
+        //             sh 'mvn test'
+        //         }
                 
-            }
-            post{
-                always{
-                    junit 'target/surefire-reports/*.xml'
-                }
-            }
-        }
-        stage('CodeReview') {
-            //agent {label 'linux_slave'}
-            agent any
-            steps {
-                script{
-                    echo 'CodeReview Hello World'
-                    echo "Deploying in ${params.Env} environment"
-                    sh "mvn pmd:pmd"
-                }
-            }
-        }
-        stage('CodeCoverage') {
-            agent any
-            steps {
-                script{
-                    echo 'Coverage Analysis Hello World'
-                    echo "Deploying in ${params.Env} environment"
-                    sh "mvn verify"
-                }
-            }
-        }
+        //     }
+        //     post{
+        //         always{
+        //             junit 'target/surefire-reports/*.xml'
+        //         }
+        //     }
+        // }
+        // stage('CodeReview') {
+        //     //agent {label 'linux_slave'}
+        //     agent any
+        //     steps {
+        //         script{
+        //             echo 'CodeReview Hello World'
+        //             echo "Deploying in ${params.Env} environment"
+        //             sh "mvn pmd:pmd"
+        //         }
+        //     }
+        // }
+        // stage('CodeCoverage') {
+        //     agent any
+        //     steps {
+        //         script{
+        //             echo 'Coverage Analysis Hello World'
+        //             echo "Deploying in ${params.Env} environment"
+        //             sh "mvn verify"
+        //         }
+        //     }
+        // }
         // stage('Package') {
         //     agent any
            
