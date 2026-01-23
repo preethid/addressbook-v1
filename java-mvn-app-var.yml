@@ -14,8 +14,8 @@ spec:
       labels:
         app: java-maven-app
     spec:
-      imagePullSecrets:
-      - name: docker-key
+      # imagePullSecrets:
+      # - name: docker-key
       containers:
       - name: sample-ctr
         image: ${IMAGE_NAME}:${BUILD_NUMBER}
