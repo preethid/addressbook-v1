@@ -78,12 +78,12 @@ pipeline {
             steps {
                 script{
                     sshagent(['slave2']) {
-                    echo "Containerising the app"
+                   
                    withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'password', usernameVariable: 'username')]) {
-    // some block
-
+  
+                    echo "Containerising the app"
                     sh "scp  -o StrictHostKeyChecking=no server-script.sh ${BUILD_SERVER}:/home/ec2-user"
-                    sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER} bash ~/server-script.sh ${IMAGE_NAME}"
+                    sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER} bash /home/ec2-user/server-script.sh ${IMAGE_NAME}"
                     sh "ssh ${BUILD_SERVER} sudo docker login -u ${username} -p ${password}"
                     sh "ssh ${BUILD_SERVER} sudo docker push ${IMAGE_NAME}"
                     sh "ssh ${BUILD_SERVER} sudo docker run -itd -P ${IMAGE_NAME}"
