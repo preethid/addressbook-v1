@@ -12,7 +12,8 @@ pipeline {
 
     }
     environment{
-        BUILD_SERVER='ec2-user@172.31.43.217'
+        BUILD_SERVER='ec2-user@172.31.39.1'
+        IMAGE_NAME='devopstrainerjava-mvn-privaterepos:$BUILD_NUMBER'
     }
 
     stages {
@@ -71,27 +72,23 @@ pipeline {
             }
             
         }
-        stage('Package') {
+        stage('Dockerize the app and push the image to docker hub') {
             agent any
-            input{
-                message "Select the platform for deployment"
-                ok "Platform Selected"
-                parameters{
-                    choice(name:'Platform',choices:['EKS','EC2','On-prem'])
-                }
-            }
             steps {
                 script{
                     sshagent(['slave2']) {
-                    echo "packaging the code"
-                    echo 'platform is ${Platform}'
-                    echo "packing the version ${params.APPVERSION}"
-                    //sh "mvn package"
+                    echo "Containerising the app"
+                   withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'password', usernameVariable: 'username')]) {
+    // some block
+
                     sh "scp  -o StrictHostKeyChecking=no server-script.sh ${BUILD_SERVER}:/home/ec2-user"
-                    sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER} 'bash ~/server-script.sh'"
+                    sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER} bash ~/server-script.sh ${IMAGE_NAME}"
+                    sh "ssh ${BUILD_SERVER} sudo docker login -u ${username} -p ${password}"
+                    sh "ssh ${BUILD_SERVER} sudo docker push ${IMAGE_NAME}"
+                    sh "ssh ${BUILD_SERVER} sudo docker run -itd -P ${IMAGE_NAME}"
                     
                 }
-                
+                    }
             }
             
         }
