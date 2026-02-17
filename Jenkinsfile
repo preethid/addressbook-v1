@@ -4,7 +4,7 @@ pipeline {
     tools{
         maven "mymaven"
     }
-    
+
     parameters{
         string(name:'Env',defaultValue:'Test',description:'environment to deploy')
         booleanParam(name:'executeTests',defaultValue: true,description:'decide to run tc')
@@ -62,7 +62,8 @@ pipeline {
             
         }
         stage('CodeCoverage') {
-            agent {label 'linux_slave'}
+           // agent {label 'linux_slave'}
+           agent any
             steps {
                 script{
                     echo "Code Coverage by jacoco"
