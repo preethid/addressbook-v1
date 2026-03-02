@@ -141,22 +141,15 @@ pipeline {
             steps{
                 script{
                     sshagent(['slave2']) { //ssh into ACM
-                        //withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-                        echo "Running the Container for testing"
-                         echo "${EC2_PUBLIC_IP}"
-                        //  sh "scp -o StrictHostKeyChecking=no server-script.sh ${BUILD_SERVER}:/home/ec2-user"
-                        //  sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER} bash /home/ec2-user/server-script.sh ${IMAGE_NAME}"
-                        // sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER} 'docker build -t ${IMAGE_NAME} .'"
+                       
+                       echo "${EC2_PUBLIC_IP}"
+                     
                     sh "scp -o StrictHostKeyChecking=no -r ansible/* ${ACM_IP}:/home/ec2-user"
                     withCredentials([sshUserPrivateKey(credentialsId: 'ansible-target',keyFileVariable: 'keyfile',usernameVariable: 'user')]){ 
                     sh "scp -o StrictHostKeyChecking=no $keyfile ${ACM_IP}:/home/ec2-user/.ssh/id_rsa"    
                     }
                     sh "ssh -o StrictHostKeyChecking=no ${ACM_IP} bash /home/ec2-user/ansible-config.sh ${AWS_ACCESS_KEY_ID} ${AWS_SECRET_ACCESS_KEY} ${DOCKER_REG_PASSWORD} ${IMAGE_NAME}"
-                        // sh "ssh ${BUILD_SERVER} sudo docker login -u ${USERNAME} -p ${PASSWORD}"
-                        // sh "ssh ${BUILD_SERVER} sudo docker push ${IMAGE_NAME}"
-                        //sh "ssh ${BUILD_SERVER} sudo docker run -itd -P ${IMAGE_NAME}"
-                        // }
-                       // }
+                       
                     }
                 }
             }
