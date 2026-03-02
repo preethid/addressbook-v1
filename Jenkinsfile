@@ -5,15 +5,15 @@ pipeline {
         maven 'mymaven'
     }
 
-    parameters{
-        string(name:'Env',defaultValue:'Test',description:'version to deploy')
-        booleanParam(name:'executeTests',defaultValue: true,description:'decide to run tc')
-        choice(name:'APPVERSION',choices:['1.1','1.2','1.3'])
-    }
+    // parameters{
+    //     string(name:'Env',defaultValue:'Test',description:'version to deploy')
+    //     booleanParam(name:'executeTests',defaultValue: true,description:'decide to run tc')
+    //     choice(name:'APPVERSION',choices:['1.1','1.2','1.3'])
+    // }
      environment{
         BUILD_SERVER='ec2-user@172.31.2.111'  //(creating manually)
        // DEPLOY_SERVER='ec2-user@172.31.4.216' (creating wth terraform)
-        IMAGE_NAME='devopstrainer/addbook:$BUILD_NUMBER'
+        IMAGE_NAME='devopstrainer/java-mvn-privaterepos:$BUILD_NUMBER'
         ACM_IP='ec2-user@172.31.15.156'
          AWS_ACCESS_KEY_ID=credentials('ACCESS_KEY')
         AWS_SECRET_ACCESS_KEY=credentials('SECRET_ACCESS_KEY')
