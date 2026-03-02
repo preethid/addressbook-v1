@@ -11,70 +11,70 @@ pipeline {
         choice(name:'APPVERSION',choices:['1.1','1.2','1.3'])
     }
      environment{
-        BUILD_SERVER='ec2-user@172.31.1.94'  //(creating manually)
+        BUILD_SERVER='ec2-user@172.31.2.111'  //(creating manually)
        // DEPLOY_SERVER='ec2-user@172.31.4.216' (creating wth terraform)
         IMAGE_NAME='devopstrainer/addbook:$BUILD_NUMBER'
-        ACM_IP='ec2-user@172.31.1.40'
+        ACM_IP='ec2-user@172.31.15.156'
          AWS_ACCESS_KEY_ID=credentials('ACCESS_KEY')
         AWS_SECRET_ACCESS_KEY=credentials('SECRET_ACCESS_KEY')
       DOCKER_REG_PASSWORD=credentials("DOCKER_REG_PASSWORD")
      }
     stages {
-        stage('Compile') {
-            agent any
-            steps {
-                script{
-                    //  sshagent(['slave2']) {
-                    echo 'Package Hello World'
-                echo "Compiling version ${params.APPVERSION}"
-                // sh "scp -o StrictHostKeyChecking=no server-script.sh ${BUILD_SERVER}:/home/ec2-user"
-                // sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER} 'bash ~/server-script.sh'"
-                sh "mvn compile"
-                //}
-                }
-            }
-        }
-        stage('UnitTest') {
-            agent any
-              when{
-                expression{
-                    params.executeTests == true
-                }
-            }
-            steps {
-                script{
-                    echo 'Run UnitTest cases for  Hello World'
-                    sh 'mvn test'
-                }
+        // stage('Compile') {
+        //     agent any
+        //     steps {
+        //         script{
+        //             //  sshagent(['slave2']) {
+        //             echo 'Package Hello World'
+        //         echo "Compiling version ${params.APPVERSION}"
+        //         // sh "scp -o StrictHostKeyChecking=no server-script.sh ${BUILD_SERVER}:/home/ec2-user"
+        //         // sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER} 'bash ~/server-script.sh'"
+        //         sh "mvn compile"
+        //         //}
+        //         }
+        //     }
+        // }
+        // stage('UnitTest') {
+        //     agent any
+        //       when{
+        //         expression{
+        //             params.executeTests == true
+        //         }
+        //     }
+        //     steps {
+        //         script{
+        //             echo 'Run UnitTest cases for  Hello World'
+        //             sh 'mvn test'
+        //         }
                 
-            }
-            post{
-                always{
-                    junit 'target/surefire-reports/*.xml'
-                }
-            }
-        }
-        stage('CodeReview') {
-            //agent {label 'linux_slave'}
-            agent any
-            steps {
-                script{
-                    echo 'CodeReview Hello World'
-                    echo "Deploying in ${params.Env} environment"
-                    sh "mvn pmd:pmd"
-                }
-            }
-        }
-        stage('CodeCoverage') {
-            agent any
-            steps {
-                script{
-                    echo 'Coverage Analysis Hello World'
-                    echo "Deploying in ${params.Env} environment"
-                    sh "mvn verify"
-                }
-            }
-        }
+        //     }
+        //     post{
+        //         always{
+        //             junit 'target/surefire-reports/*.xml'
+        //         }
+        //     }
+        // }
+        // stage('CodeReview') {
+        //     //agent {label 'linux_slave'}
+        //     agent any
+        //     steps {
+        //         script{
+        //             echo 'CodeReview Hello World'
+        //             echo "Deploying in ${params.Env} environment"
+        //             sh "mvn pmd:pmd"
+        //         }
+        //     }
+        // }
+        // stage('CodeCoverage') {
+        //     agent any
+        //     steps {
+        //         script{
+        //             echo 'Coverage Analysis Hello World'
+        //             echo "Deploying in ${params.Env} environment"
+        //             sh "mvn verify"
+        //         }
+        //     }
+        // }
         // stage('Package') {
         //     agent any
            
