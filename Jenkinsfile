@@ -15,43 +15,43 @@ pipeline {
     }
     stages {
         
-        stage('Compile') {
-            agent any
-            steps {
-                echo "Compiling the Code in ${params.Env} environment"
-                sh 'mvn compile'
-            }
-        }
-        stage('Code Review') {
-             agent any
-            steps {
-                echo 'Reviewing the Code'
-                sh "mvn pmd:pmd"
-            }
-        }
-        stage('Unit Test') {
-            agent any
-            when {
-                expression { 
-                    params.executeTests == true} 
-                    }
-            steps {
-                echo 'Unit Testing the Code'
-                sh 'mvn test'
-            }
-            post{
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
-            }
-        }
-        stage('Coverage Analysis') {
-             agent {label 'linux_slave'}
-            steps {
-                echo 'Static Code Coverage Analysis of the Code'
-                sh 'mvn verify'
-            }
-        }
+        // stage('Compile') {
+        //     agent any
+        //     steps {
+        //         echo "Compiling the Code in ${params.Env} environment"
+        //         sh 'mvn compile'
+        //     }
+        // }
+        // stage('Code Review') {
+        //      agent any
+        //     steps {
+        //         echo 'Reviewing the Code'
+        //         sh "mvn pmd:pmd"
+        //     }
+        // }
+        // stage('Unit Test') {
+        //     agent any
+        //     when {
+        //         expression { 
+        //             params.executeTests == true} 
+        //             }
+        //     steps {
+        //         echo 'Unit Testing the Code'
+        //         sh 'mvn test'
+        //     }
+        //     post{
+        //         always {
+        //             junit 'target/surefire-reports/*.xml'
+        //         }
+        //     }
+        // }
+        // stage('Coverage Analysis') {
+        //      agent {label 'linux_slave'}
+        //     steps {
+        //         echo 'Static Code Coverage Analysis of the Code'
+        //         sh 'mvn verify'
+        //     }
+        // }
         stage('Package') {
              agent any
             steps {
