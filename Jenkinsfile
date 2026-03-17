@@ -1,10 +1,10 @@
 pipeline {
     agent any
 
-    // tools {
-    //     // Install the Maven version configured as "M3" and add it to the path.
-    //     maven "M3"
-    // }
+    tools {
+        // Install the Maven version configured as "M3" and add it to the path.
+        maven "mymaven"
+    }
       parameters {
         string(name: 'Env', defaultValue: 'Test', description: 'Version to deploy')
         booleanParam(name: 'executeTests', defaultValue: true, description: 'Decide to run test cases')
@@ -16,11 +16,13 @@ pipeline {
         stage('Compile') {
             steps {
                 echo "compiling the code in ${params.Env} environment"
+                sh "mvn compile"
             }
         }
-           stage('CodeReview') {
+         stage('CodeReview') {
             steps {
                 echo "Review the code"
+                sh "mvn pmd:pmd"
             }
         }
         stage('UnitTest') {
@@ -29,11 +31,18 @@ pipeline {
             }
             steps {
                 echo "Test the code"
+                sh "mvn test"
+            }
+            post{
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
             }
         }
         stage('CoverageAnalysis') {
             steps {
                 echo "Code Coverage Analysis"
+                sh "mvn verify"
             }
         }
         stage('Package') {
@@ -43,6 +52,7 @@ pipeline {
             }
             steps {
                 echo "Packaging the code for version ${params.APPVERSION}"
+                sh "mvn package"
             }
         }
         }
