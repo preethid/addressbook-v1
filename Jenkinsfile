@@ -37,6 +37,10 @@ pipeline {
             }
         }
         stage('Package') {
+            input{
+                message "Do you want to package the code for version ${params.APPVERSION}?"
+                ok "Yes, Package it!"
+            }
             steps {
                 echo "Packaging the code for version ${params.APPVERSION}"
             }
