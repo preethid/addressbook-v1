@@ -5,13 +5,13 @@ pipeline {
         maven 'mymaven'
     }
 
-    parameters{
-        string(name:'Env',defaultValue:'Test',description:'version to deploy')
-        booleanParam(name:'executeTests',defaultValue: true,description:'decide to run tc')
-        choice(name:'APPVERSION',choices:['1.1','1.2','1.3'])
-    }
+    // parameters{
+    //     string(name:'Env',defaultValue:'Test',description:'version to deploy')
+    //     booleanParam(name:'executeTests',defaultValue: true,description:'decide to run tc')
+    //     choice(name:'APPVERSION',choices:['1.1','1.2','1.3'])
+    // }
      environment{
-        BUILD_SERVER='ec2-user@172.31.2.131'
+        BUILD_SERVER='ec2-user@172.31.4.69'
       //  DEPLOY_SERVER='ec2-user@172.31.47.150'
         IMAGE_NAME='devopstrainer/addbook'
         ACCESS_KEY=credentials('ACCESS_KEY')
