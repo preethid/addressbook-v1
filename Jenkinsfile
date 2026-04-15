@@ -59,6 +59,14 @@ pipeline {
         }
          stage('Packaging') {
             agent { label 'linux_slave' }
+            input{
+               message "Package the code"
+               ok "Platform selected"
+               parameters{
+                   choice(name:'Platform',choices:['Ec2','OnPrem'])
+               }
+           }
+
             steps {
                 script{
                     echo 'Package the code'
