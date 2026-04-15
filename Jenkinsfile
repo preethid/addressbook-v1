@@ -5,12 +5,19 @@ pipeline {
         maven 'mymaven'
     }
 
+    parameters {
+        string(name: 'Env', defaultValue: 'Test', description: 'Version to deploy')
+        booleanParam(name: 'executeTests', defaultValue: true, description: 'Decide to run test cases')
+        choice(name: 'APPVERSION', choices: ['1.1', '1.2', '1.3'], description: 'Select application version')
+    }
+
+
     stages {
         stage('Compile') {
             agent any
             steps {
                 script{
-                    echo 'Compiling the code'
+                    echo 'Compiling the code ${params.Env}'
                     sh 'mvn compile'
                 }
             }
@@ -26,6 +33,9 @@ pipeline {
         }
          stage('UnitTest') {
             agent any
+            when {
+                expression { params.executeTests == true }
+            }
             steps {
                 script{
                     echo 'UnitTesting the code'
@@ -42,7 +52,7 @@ pipeline {
             agent any
             steps {
                 script{
-                    echo 'Static code coverage'
+                    echo 'Static code coverage ${params.APPVERSION}'
                     sh "mvn verify"
                 }
             }
