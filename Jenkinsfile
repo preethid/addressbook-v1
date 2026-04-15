@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent none
 
     tools {
         maven 'mymaven'
@@ -7,6 +7,7 @@ pipeline {
 
     stages {
         stage('Compile') {
+            agent any
             steps {
                 script{
                     echo 'Compiling the code'
@@ -15,6 +16,7 @@ pipeline {
             }
         }
         stage('CodeReview') {
+            agent any
             steps {
                 script{
                     echo 'Reviewing the code'
@@ -23,6 +25,7 @@ pipeline {
             }
         }
          stage('UnitTest') {
+            agent any
             steps {
                 script{
                     echo 'UnitTesting the code'
@@ -36,6 +39,7 @@ pipeline {
             }
         }
          stage('CoverageAnalysis') {
+            agent any
             steps {
                 script{
                     echo 'Static code coverage'
@@ -44,6 +48,7 @@ pipeline {
             }
         }
          stage('Packaging') {
+            agent { label 'linux_slave' }
             steps {
                 script{
                     echo 'Package the code'
