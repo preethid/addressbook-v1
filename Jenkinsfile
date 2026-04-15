@@ -1,30 +1,49 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'mymaven'
+    }
+
     stages {
         stage('Compile') {
             steps {
-                echo 'Compiling the code'
+                script{
+                    echo 'Compiling the code'
+                    sh 'mvn compile'
+                }
             }
         }
         stage('CodeReview') {
             steps {
-                echo 'Reviewing the code'
+                script{
+                    echo 'Reviewing the code'
+                    sh "mvn pmd:pmd"
+                }
             }
         }
          stage('UnitTest') {
             steps {
-                echo 'UnitTesting the code'
+                script{
+                    echo 'UnitTesting the code'
+                    sh 'mvn test'
+                }
             }
         }
          stage('CoverageAnalysis') {
             steps {
-                echo 'Static code coverage'
+                script{
+                    echo 'Static code coverage'
+                    sh "mvn verify"
+                }
             }
         }
          stage('Packaging') {
             steps {
-                echo 'Package the code'
+                script{
+                    echo 'Package the code'
+                    sh "mvn package"
+                }
             }
         }
     }
