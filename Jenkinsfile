@@ -84,7 +84,7 @@ pipeline {
                         // sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER} 'docker build -t ${IMAGE_NAME} .'"
                         sh "ssh ${BUILD_SERVER} sudo docker login -u ${USERNAME} -p ${PASSWORD}"
                         sh "ssh ${BUILD_SERVER} sudo docker push ${IMAGE_NAME}"
-                        //sh "ssh ${BUILD_SERVER} sudo docker run -itd -P ${IMAGE_NAME}"
+                        sh "ssh ${BUILD_SERVER} sudo docker run -itd -P ${IMAGE_NAME}"
                         }
                     }
                 }
