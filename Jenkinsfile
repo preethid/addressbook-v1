@@ -12,59 +12,60 @@ pipeline {
     }
      
      environment {
-        BUILD_SERVER='ec2-user@172.31.13.13'
+        BUILD_SERVER='ec2-user@172.31.9.183'
+        IMAGE_NAME='devopstrainer/java-mvn-privaterepos:$BUILD_NUMBER'
      }
 
     stages {
-        stage('Compile') {
+        // stage('Compile') {
+        //     agent any
+        //     steps {
+        //         script{
+        //             sshagent(['slave2']){
+        //             echo 'Compiling the code ${params.Env}'
+        //             sh "scp -o StrictHostKeyChecking=no server-script.sh ${BUILD_SERVER}:/home/ec2-user"
+        //             sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER} 'bash /home/ec2-user/server-script.sh'"
+        //         }
+        //         }
+        //     }
+        // }
+        // stage('CodeReview') {
+        //     agent any
+        //     steps {
+        //         script{
+        //             echo 'Reviewing the code'
+        //             sh "mvn pmd:pmd"
+        //         }
+        //     }
+        // }
+        //  stage('UnitTest') {
+        //     agent any
+        //     when {
+        //         expression { params.executeTests == true }
+        //     }
+        //     steps {
+        //         script{
+        //             echo 'UnitTesting the code'
+        //             sh 'mvn test'
+        //         }
+        //     }
+        //     post{
+        //         always{
+        //             junit 'target/surefire-reports/*.xml'
+        //         }
+        //     }
+        // }
+        //  stage('CoverageAnalysis') {
+        //     agent any
+        //     steps {
+        //         script{
+        //             echo 'Static code coverage ${params.APPVERSION}'
+        //             sh "mvn verify"
+        //         }
+        //     }
+        // }
+         stage('Containerising the app') {
             agent any
-            steps {
-                script{
-                    sshagent(['slave2']){
-                    echo 'Compiling the code ${params.Env}'
-                    sh "scp -o StrictHostKeyChecking=no server-script.sh ${BUILD_SERVER}:/home/ec2-user"
-                    sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER} 'bash /home/ec2-user/server-script.sh'"
-                }
-                }
-            }
-        }
-        stage('CodeReview') {
-            agent any
-            steps {
-                script{
-                    echo 'Reviewing the code'
-                    sh "mvn pmd:pmd"
-                }
-            }
-        }
-         stage('UnitTest') {
-            agent any
-            when {
-                expression { params.executeTests == true }
-            }
-            steps {
-                script{
-                    echo 'UnitTesting the code'
-                    sh 'mvn test'
-                }
-            }
-            post{
-                always{
-                    junit 'target/surefire-reports/*.xml'
-                }
-            }
-        }
-         stage('CoverageAnalysis') {
-            agent any
-            steps {
-                script{
-                    echo 'Static code coverage ${params.APPVERSION}'
-                    sh "mvn verify"
-                }
-            }
-        }
-         stage('Packaging') {
-            agent { label 'linux_slave' }
             input{
                message "Package the code"
                ok "Platform selected"
@@ -75,8 +76,17 @@ pipeline {
 
             steps {
                 script{
-                    echo 'Package the code'
-                    sh "mvn package"
+                     sshagent(['slave2']) {
+                        withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                        echo "Containerising the code and pushing the image"
+                         sh "scp -o StrictHostKeyChecking=no server-script.sh ${BUILD_SERVER}:/home/ec2-user"
+                         sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER} bash /home/ec2-user/server-script.sh ${IMAGE_NAME}"
+                        // sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER} 'docker build -t ${IMAGE_NAME} .'"
+                        sh "ssh ${BUILD_SERVER} sudo docker login -u ${USERNAME} -p ${PASSWORD}"
+                        sh "ssh ${BUILD_SERVER} sudo docker push ${IMAGE_NAME}"
+                        //sh "ssh ${BUILD_SERVER} sudo docker run -itd -P ${IMAGE_NAME}"
+                        }
+                    }
                 }
             }
         }
