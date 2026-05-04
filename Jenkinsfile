@@ -15,8 +15,8 @@ pipeline {
        // DEPLOY_SERVER='ec2-user@172.31.4.216' (creating wth terraform)
         IMAGE_NAME='devopstrainer/java-mvn-privaterepos:$BUILD_NUMBER'
         ACM_IP='ec2-user@172.31.8.174'
-         AWS_ACCESS_KEY_ID=credentials('ACCESS_KEY')
-        AWS_SECRET_ACCESS_KEY=credentials('SECRET_ACCESS_KEY')
+         AWS_ACCESS_KEY_ID=credentials('AWS_ACCESS_KEY_ID')
+        AWS_SECRET_ACCESS_KEY=credentials('AWS_SECRET_ACCESS_KEY')
       DOCKER_REG_PASSWORD=credentials("DOCKER_REG_PASSWORD")
      }
     stages {
