@@ -11,11 +11,11 @@ pipeline {
     //     choice(name:'APPVERSION',choices:['1.1','1.2','1.3'])
     // }
      environment{
-        BUILD_SERVER='ec2-user@172.31.4.69'
+        BUILD_SERVER='ec2-user@172.31.14.142'
       //  DEPLOY_SERVER='ec2-user@172.31.47.150'
         IMAGE_NAME='devopstrainer/addbook'
-        ACCESS_KEY=credentials('ACCESS_KEY')
-        SECRET_ACCESS_KEY=credentials('SECRET_ACCESS_KEY')
+        ACCESS_KEY=credentials('AWS_ACCESS_KEY_ID')
+        SECRET_ACCESS_KEY=credentials('AWS_SECRET_ACCESS_KEY')
         GIT_CREDENTIALS_ID = 'GIT_CREDENTIALS_ID' // The username-password type ID of the Jenkins credentials
        GIT_USERNAME = 'preethid'
        GIT_EMAIL = 'preethi@example.com'
