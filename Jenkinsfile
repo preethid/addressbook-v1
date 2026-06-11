@@ -13,7 +13,7 @@ pipeline{
     stages{
         stage('Compile'){
             steps{
-                echo 'Building for environment ${params.Env}...'
+                echo "Building for environment ${params.Env}..."
                 sh "mvn compile"
             }
         }
@@ -46,7 +46,7 @@ pipeline{
                 ok "Yes, Package it!"
             }
              steps{
-                  echo 'Select the application version to package: ${params.APPVERSION}'
+                  echo "Select the application version to package: ${params.APPVERSION}"
                 sh "mvn package"
             }
             
