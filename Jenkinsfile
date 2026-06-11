@@ -4,11 +4,16 @@ pipeline{
         jdk 'myjava'
         maven 'mymaven'
     }
-     
+     parameters {
+        string(name: 'Env', defaultValue: 'Test', description: 'Version to deploy')
+        booleanParam(name: 'executeTests', defaultValue: true, description: 'Decide to run test cases')
+        choice(name: 'APPVERSION', choices: ['1.1', '1.2', '1.3'], description: 'Select application version')
+     }
+
     stages{
         stage('Compile'){
             steps{
-                echo 'Building...'
+                echo 'Building for environment ${params.Env}...'
                 sh "mvn compile"
             }
         }
@@ -19,6 +24,9 @@ pipeline{
             }
         }
         stage('UnitTest'){
+            when {
+                expression { params.executeTests == true }
+            }
             steps{
                 echo 'UnitTest...'
                 sh "mvn test"
@@ -32,6 +40,11 @@ pipeline{
             
         }
         stage('Package the app'){
+            inputs{
+                echo 'Select the application version to package: ${params.APPVERSION}'
+                message "Package the app with version ${params.APPVERSION}?"
+                ok "Yes, Package it!"
+            }
              steps{
                 echo 'Packaging the app...'
                 sh "mvn package"
