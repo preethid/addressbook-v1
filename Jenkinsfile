@@ -40,13 +40,13 @@ pipeline{
             
         }
         stage('Package the app'){
-            inputs{
-                echo 'Select the application version to package: ${params.APPVERSION}'
+            input{
+              
                 message "Package the app with version ${params.APPVERSION}?"
                 ok "Yes, Package it!"
             }
              steps{
-                echo 'Packaging the app...'
+                  echo 'Select the application version to package: ${params.APPVERSION}'
                 sh "mvn package"
             }
             
