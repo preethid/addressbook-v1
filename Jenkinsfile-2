@@ -9,12 +9,19 @@ pipeline{
         booleanParam(name: 'executeTests', defaultValue: true, description: 'Decide to run test cases')
         choice(name: 'APPVERSION', choices: ['1.1', '1.2', '1.3'], description: 'Select application version')
      }
+     environment {
+        BUILD_SERVER='ec2-user@13.203.204.214'
+        }
 
     stages{
         stage('Compile'){
             steps{
-                echo "Building for environment ${params.Env}..."
-                sh "mvn compile"
+                sshagent(['slave2']) {
+                    echo "Compiling the code for environment ${params.Env}..."
+                    sh "scp -o StrictHostKeyChecking=no server-script.sh ${BUILD_SERVER}:/home/ec2-user"
+                    sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER} 'bash /home/ec2-user/server-script.sh'"
+                }
+                
             }
         }
         stage('CodeReview'){
