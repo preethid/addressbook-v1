@@ -11,10 +11,10 @@ pipeline {
     //     choice(name:'APPVERSION',choices:['1.1','1.2','1.3'])
     // }
      environment{
-        BUILD_SERVER='ec2-user@172.31.12.60'  //(creating manually)
+        BUILD_SERVER='ec2-user@13.203.212.23'  //(creating manually)
        // DEPLOY_SERVER='ec2-user@172.31.4.216' (creating wth terraform)
         IMAGE_NAME='devopstrainer/java-mvn-privaterepos:$BUILD_NUMBER'
-        ACM_IP='ec2-user@172.31.8.174'
+        ACM_IP='ec2-user@15.207.254.236'
          AWS_ACCESS_KEY_ID=credentials('AWS_ACCESS_KEY_ID')
         AWS_SECRET_ACCESS_KEY=credentials('AWS_SECRET_ACCESS_KEY')
       DOCKER_REG_PASSWORD=credentials("DOCKER_REG_PASSWORD")
