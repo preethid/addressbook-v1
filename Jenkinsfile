@@ -129,9 +129,9 @@ pipeline {
                     echo 'Provisioning the deploy server with Terraform'
                     dir('terraform') {
                         // Assuming the Terraform files are in a directory named 'terraform'
-                        sh 'terraform init'
-                        sh 'terraform apply -auto-approve'
-                        EC2_PUBLIC_IP = sh(script: 'terraform output ec2-ip', returnStdout: true).trim()
+                        sh '/opt/homebrew/bin/terraform init'
+                        sh '/opt/homebrew/bin/terraform apply -auto-approve'
+                        EC2_PUBLIC_IP = sh(script: '/opt/homebrew/bin/terraform output ec2-ip', returnStdout: true).trim()
                     }
                 }
             }
