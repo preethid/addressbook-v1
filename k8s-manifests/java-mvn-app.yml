@@ -18,7 +18,7 @@ spec:
       # - name: docker-key
       containers:
       - name: sample-ctr
-        image: devopstrainer/addbook:6
+        image: devopstrainer/addbook:7
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
