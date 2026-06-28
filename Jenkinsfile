@@ -157,7 +157,7 @@ pipeline {
                 // sh 'envsubst < k8s-manifests/java-mvn-app.yml |  kubectl apply -f -'
                 // sh 'kubectl get all'
             withCredentials([usernamePassword(credentialsId: "${GIT_CREDENTIALS_ID}", passwordVariable: 'GIT_TOKEN', usernameVariable: 'GIT_USER')]) {
-                       sh 'envsubst < java-mvn-app-var.yml > k8s-manifests/java-mvn-app.yml'
+                       sh '/opt/homebrew/bin/envsubst < java-mvn-app-var.yml > k8s-manifests/java-mvn-app.yml'
                        sh "git config user.email ${GIT_EMAIL}"
                        sh "git config user.name ${GIT_USERNAME}"
                        sh "git add k8s-manifests/java-mvn-app.yml"
