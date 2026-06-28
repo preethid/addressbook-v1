@@ -11,7 +11,7 @@ pipeline {
     //     choice(name:'APPVERSION',choices:['1.1','1.2','1.3'])
     // }
      environment{
-        BUILD_SERVER='ec2-user@172.31.14.142'
+        BUILD_SERVER='ec2-user@3.108.252.33'
       //  DEPLOY_SERVER='ec2-user@172.31.47.150'
         IMAGE_NAME='devopstrainer/addbook'
         ACCESS_KEY=credentials('AWS_ACCESS_KEY_ID')
