@@ -148,7 +148,7 @@ pipeline {
             agent any
             steps{
                 script{
-                echo "Run the k8s manifest file"
+                echo "Update manifest file with actual image name and push to git"
                 // sh 'aws --version'
                 // sh 'aws configure set aws_access_key_id ${ACCESS_KEY}'
                 // sh 'aws configure set aws_secret_access_key ${SECRET_ACCESS_KEY}'
