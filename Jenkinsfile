@@ -15,13 +15,13 @@ pipeline {
     stages {
         stage('Compile') {
             steps {
-                echo 'Compile the code in ${params.Env} Environment'
+                echo "Compile the code in ${params.Env} Environment"
                 sh 'mvn compile'
             }
         }
         stage('CodeReview') {
             steps {
-                echo 'Review the Code in ${params.Env} Environment'
+                echo "Review the Code in ${params.Env} Environment"
                 sh 'mvn pmd:pmd'
             }
         }
@@ -37,13 +37,13 @@ pipeline {
         stage('CoverageAnalysis') {
 
             steps {
-                echo 'Static Code Coverage Analysis  ${params.APPVERSION}'
+                echo "Static Code Coverage Analysis  ${params.APPVERSION}"
                 sh 'mvn verify'
             }
         }
         stage('Package') {
             steps {
-                echo 'Packaging the code'
+                echo "Packaging the code in ${params.Env} Environment"
                 sh 'mvn package'
             }
         }
