@@ -58,7 +58,7 @@ pipeline {
                 sshagent(['slave1']) {
 
                 echo "Packaging the code in ${params.Env} Environment"
-                sh "scp -o StrictHostKeyChecking=no server-script.sh ${BUILDSERVER}:/home/ec2-user/addressbook-v1"
+                sh "scp -o StrictHostKeyChecking=no server-script.sh ${BUILDSERVER}:/home/ec2-user"
                 sh "ssh -o StrictHostKeyChecking=no ${BUILDSERVER} 'bash ~/server-script.sh'"
                 }
             }
