@@ -33,6 +33,11 @@ pipeline {
                 echo 'UnitTest the code'
                 sh "mvn test"
             }
+            post{
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
         }
         stage('CoverageAnalysis') {
 
@@ -42,6 +47,10 @@ pipeline {
             }
         }
         stage('Package') {
+            input {
+                message "Do you want to package the code?"
+                ok "Yes, I want to package"
+            }
             steps {
                 echo "Packaging the code in ${params.Env} Environment"
                 sh 'mvn package'
