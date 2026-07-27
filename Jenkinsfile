@@ -111,7 +111,7 @@ pipeline {
             agent any
             steps{
                 script{
-                    sshagent(['slave2']) {
+                    sshagent(['slave1']) {
                         withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
                         echo "Containerising the code and pushing the image"
                          sh "scp -o StrictHostKeyChecking=no server-script.sh ${BUILD_SERVER}:/home/ec2-user"
