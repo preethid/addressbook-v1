@@ -14,8 +14,8 @@ pipeline {
         BUILD_SERVER='ec2-user@13.203.210.235'
       //  DEPLOY_SERVER='ec2-user@172.31.47.150'
         IMAGE_NAME='devopstrainer/addbook'
-        ACCESS_KEY=credentials('AWS_ACCESS_KEY_ID')
-        SECRET_ACCESS_KEY=credentials('AWS_SECRET_ACCESS_KEY')
+        // ACCESS_KEY=credentials('AWS_ACCESS_KEY_ID')
+        // SECRET_ACCESS_KEY=credentials('AWS_SECRET_ACCESS_KEY')
         GIT_CREDENTIALS_ID = 'GIT_CREDENTIALS_ID' // The username-password type ID of the Jenkins credentials
        GIT_USERNAME = 'preethid'
        GIT_EMAIL = 'preethi@example.com'
