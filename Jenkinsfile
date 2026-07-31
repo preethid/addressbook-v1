@@ -11,10 +11,10 @@ pipeline {
     //     choice(name:'APPVERSION',choices:['1.1','1.2','1.3'])
     // }
      environment{
-        BUILD_SERVER='ec2-user@13.203.212.23'  //(creating manually)
+        BUILD_SERVER='ec2-user@13.201.85.200'  //(creating manually)
        // DEPLOY_SERVER='ec2-user@172.31.4.216' (creating wth terraform)
         IMAGE_NAME='devopstrainer/java-mvn-privaterepos:$BUILD_NUMBER'
-        ACM_IP='ec2-user@15.207.254.236'
+        ACM_IP='ec2-user@15.207.249.189'
          AWS_ACCESS_KEY_ID=credentials('AWS_ACCESS_KEY_ID')
         AWS_SECRET_ACCESS_KEY=credentials('AWS_SECRET_ACCESS_KEY')
       DOCKER_REG_PASSWORD=credentials("DOCKER_REG_PASSWORD")
@@ -108,7 +108,7 @@ pipeline {
             agent any
             steps{
                 script{
-                    sshagent(['slave2']) {
+                    sshagent(['slave1']) {
                         withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
                         echo "Containerising the code and pushing the image"
                          sh "scp -o StrictHostKeyChecking=no server-script.sh ${BUILD_SERVER}:/home/ec2-user"
@@ -127,11 +127,11 @@ pipeline {
             steps {
                 script {
                     echo 'Provisioning the deploy server with Terraform'
-                    dir('terraform') {
-                        // Assuming the Terraform files are in a directory named 'terraform'
-                        sh '/opt/homebrew/bin/terraform init'
-                        sh '/opt/homebrew/bin/terraform apply -auto-approve'
-                        EC2_PUBLIC_IP = sh(script: '/opt/homebrew/bin/terraform output ec2-ip', returnStdout: true).trim()
+                        dir('terraform') {
+                            // Assuming the Terraform files are in a directory named 'terraform'
+                            sh '/opt/homebrew/bin/terraform init'
+                            sh '/opt/homebrew/bin/terraform apply -auto-approve'
+                            EC2_PUBLIC_IP = sh(script: '/opt/homebrew/bin/terraform output ec2-ip', returnStdout: true).trim()
                     }
                 }
             }
@@ -140,7 +140,7 @@ pipeline {
             agent any
             steps{
                 script{
-                    sshagent(['slave2']) { //ssh into ACM
+                    sshagent(['slave1']) { //ssh into ACM
                        
                        echo "${EC2_PUBLIC_IP}"
                      
