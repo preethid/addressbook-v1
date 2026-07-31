@@ -26,4 +26,4 @@
   - name: login to private registry
     docker_login: username=devopstrainer password={{DOCKER_REG_PASSWORD}}
   - name: Run the addbook image
-    docker_container: name=addbook image={{DOCKER_IMAGE}} published_ports="8080:8080"
+    docker_container: name=addbook image={{DOCKER_IMAGE}} 
